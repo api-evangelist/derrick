@@ -1,0 +1,86 @@
+name: Derrick
+description: >-
+  B2B data-enrichment engine providing professional emails, phone numbers, LinkedIn/company enrichment, tech-stack
+  detection, email verification, lead/company search, and French SIRET/SIREN data. Delivered via a Google Sheets add-on,
+  a REST API, and an MCP server for AI agents.
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/derrick-b2b-data-enrichment-google-sheets-claude-api-derrick/refs/heads/main/apis.yml
+created: '2026-09-09'
+modified: '2026-09-09'
+specificationVersion: '0.21'
+tags:
+  - b2b-data-enrichment
+  - email-finder
+  - phone-finder
+  - company-firmographics
+  - lead-generation
+  - sales-intelligence
+  - crm-enrichment
+  - tech-stack-detection
+  - email-verification
+  - siret-siren-france
+  - mcp-server
+  - llms-txt
+  - google-sheets
+  - gtm-tools
+apis:
+  - name: Derrick REST API
+    description: >-
+      REST API for B2B data enrichment (emails, phones, profile/company enrichment, verification, search, SIRET/SIREN).
+      Bearer API-key auth; requires Standard plan or above.
+    humanURL: https://app1.derrick-app.com/api/v1/docs/
+    baseURL: https://app1.derrick-app.com/api/v1/
+    tags:
+      - b2b-data-enrichment
+      - email-finder
+      - phone-finder
+      - company-firmographics
+      - lead-generation
+      - sales-intelligence
+      - crm-enrichment
+      - tech-stack-detection
+      - email-verification
+      - siret-siren-france
+      - mcp-server
+      - llms-txt
+      - google-sheets
+      - gtm-tools
+    properties:
+      - type: Documentation
+        url: https://app1.derrick-app.com/api/v1/docs/
+  - name: Derrick MCP Server
+    description: >-
+      Hosted streamable-HTTP MCP server exposing 12 enrichment tools; also available as a local npm package
+      (derrick-mcp). Bearer API-key auth; requires Standard plan or above.
+    humanURL: https://derrick-app.com/mcp
+    baseURL: https://app1.derrick-app.com/mcp
+    tags:
+      - b2b-data-enrichment
+      - email-finder
+      - phone-finder
+      - company-firmographics
+      - lead-generation
+      - sales-intelligence
+      - crm-enrichment
+      - tech-stack-detection
+      - email-verification
+      - siret-siren-france
+      - mcp-server
+      - llms-txt
+      - google-sheets
+      - gtm-tools
+    properties:
+      - type: MCPServer
+        url: https://app1.derrick-app.com/mcp
+      - type: Documentation
+        url: https://derrick-app.com/mcp
+      - type: LLMsTxt
+        url: https://derrick-app.com/llms.txt
+maintainers:
+  - FN: Derrick Support
+    url: mailto:contact@derrick-app.com
+generated:
+  by: apis.io/add
+  model: claude-opus-4-8
+  confidence: 93
+  at: '2026-09-09T11:29:58.771Z'
