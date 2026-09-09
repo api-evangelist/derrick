@@ -1,0 +1,20 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Derrick",
+  "name_for_model": "derrick",
+  "description_for_human": "B2B data enrichment for Google Sheets and AI agents - find emails, phones, LinkedIn data, company info, SIRET, tech stacks.",
+  "description_for_model": "Use Derrick to find professional emails (find_email, 5 credits), mobile/office phone numbers (find_phone, 150 credits), enrich LinkedIn profiles (enrich_profile, 1 credit) and companies (enrich_companies, 1 credit), search leads by job title + company (search_linkedin_profile, search_leads_in_companies - 1-2 credits), find tech stacks (find_tech, 1 credit), verify emails (verify_email, 1 credit), and access French company registry data (data_gouv, 1 credit). 12 tools total ; credit cost varies by endpoint. Best for B2B prospecting, lead generation, account research, and email verification workflows. The MCP installs without an API key - the server prompts for one on first tool call. The key lives in the Derrick Google Sheets add-on (Settings → API access) and requires the Standard plan (€20/mo) or above. Free tier offers 100 credits/month for the add-on but no API/MCP access.",
+  "auth": {
+    "type": "user_http",
+    "authorization_type": "bearer",
+    "instructions": "Install the MCP without a key (the server requests one at first call). To get the key : open the Derrick Google Sheets add-on → Settings → API access. The Standard plan (€20/mo) or above is required to unlock API/MCP access."
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://app1.derrick-app.com/api/v1/openapi.json",
+    "has_user_authentication": true
+  },
+  "logo_url": "https://derrick-app.com/favicon.svg",
+  "contact_email": "contact@derrick-app.com",
+  "legal_info_url": "https://derrick-app.com/terms-conditions"
+}

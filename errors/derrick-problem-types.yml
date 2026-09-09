@@ -1,0 +1,49 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  npm derrick-mcp@0.3.0 (dist/tools.js error reference, dist/api.js) + live 401 probe of
+  https://app1.derrick-app.com/api/v1/openapi.json (envelope observed verbatim)
+format: proprietary-json-envelope
+note: >-
+  No OpenAPI or public error reference page is published; this catalog is derived from the
+  provider's own npm package, which ships a user-facing error table, and from the envelope
+  observed live on an unauthenticated request. A distinctive billing dimension is recorded
+  per error: whether the failed call still consumes credits.
+envelope:
+  shape: '{"success": false, "error": "<message>", "errorType": "<CODE>"}'
+  success_field: success
+  message_field: error
+  code_field: errorType
+errors:
+  - status: 401
+    errorType: AUTH
+    title: Invalid or missing API key
+    remediation: Check the key in Google Sheets > Derrick menu > burger icon > API; requires a paid plan with API access.
+    charged: false
+    observed: 'live 2026-09-09: {"success":false,"error":"Invalid or missing API key","errorType":"AUTH"}'
+  - status: 402
+    errorType: NO CREDITS
+    title: Out of credits
+    remediation: Upgrade or wait for the monthly credit refill; unused credits roll over on paid plans.
+    charged: false
+  - status: 429
+    errorType: RATE LIMIT
+    title: Rate limit exceeded (60 requests/minute)
+    remediation: Back off exponentially with jitter; initial delay 2s, max 60s (provider guidance).
+    charged: false
+  - status: 200
+    errorType: not_found
+    title: No match found
+    remediation: >-
+      Empty result. Per-call endpoints (verify_email, enrich_profile, enrich_companies, searches,
+      imports, find_tech, data_gouv, SERP tools) still charge credits; per-success endpoints
+      (find_email, find_phone) do not.
+    charged: per billing model of the endpoint
+  - status: null
+    errorType: empty_response
+    title: Empty response - Chrome extension not connected
+    remediation: LinkedIn-backed endpoints require the Derrick Chrome extension installed and connected.
+    charged: false
+billing_semantics:
+  per_success: [find_email, find_phone]
+  per_call: [verify_email, enrich_profile, enrich_companies, search_linkedin_profile, search_companies, website_contact_social, find_tech, data_gouv, get_name_from_email, find_gender, linkedin_profile_followers_count, search_leads_in_companies, serp_first_result, serp_first_page]

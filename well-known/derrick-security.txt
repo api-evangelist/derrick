@@ -1,0 +1,8 @@
+# Derrick App security contact
+# RFC 9116 - see https://securitytxt.org for the spec.
+
+Contact: mailto:contact@derrick-app.com
+Expires: 2027-05-21T00:00:00.000Z
+Preferred-Languages: en, fr
+Canonical: https://derrick-app.com/.well-known/security.txt
+Policy: https://derrick-app.com/privacy

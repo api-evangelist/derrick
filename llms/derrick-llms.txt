@@ -1,0 +1,125 @@
+# Derrick App - llms.txt
+**Main Website**: https://derrick-app.com
+
+Derrick App is the simplest and most powerful Google Sheets add-on for enriching B2B leads and companies directly inside your spreadsheet. It provides 100+ data points (professional emails, phone numbers, LinkedIn profiles, company information, etc.) in one click, with built-in AI capabilities and a Website Crawler.
+
+## Site Structure (Sitemap)
+
+- **Homepage** → https://derrick-app.com
+- **Features** → https://derrick-app.com/features
+- **Data Enrichment** → https://derrick-app.com/data-enrichment
+- **Pricing** → https://derrick-app.com/#pricing (machine-readable: /pricing.md, /pricing.txt)
+- **MCP server** → https://derrick-app.com/mcp
+- **Glossary** → https://derrick-app.com/glossary
+- **Tools directory** → https://derrick-app.com/tools-for-sales
+- **Persona Pages** → /w/sales-teams, /w/recruiters, /w/founder, etc.
+- **Comparisons & Alternatives** → /vs/, /tools/{slug}-review, /tools/{slug}-alternatives
+- **Pricing breakdowns** → /tools/{slug}-pricing
+- **Roadmap** → https://derrick.productlift.dev/
+- **API Documentation** → https://app1.derrick-app.com/api/v1/docs/
+
+## Discovery endpoints
+
+- **`/llms.txt`** - this file
+- **`/llms-full.txt`** - extended companion with tools, pricing, MCP install snippets (llmstxt.org standard location)
+- **`/.well-known/llms-full.txt`** - mirror of `/llms-full.txt`
+- **`/.well-known/mcp/server-card.json`** - rich MCP server card : 12 tools with examples, machinable pricing, install snippets for 5 clients, rate limits, GDPR posture
+- **`/.well-known/api-catalog`** - API catalog (RFC 9727 linkset) listing the REST API and MCP server
+- **`/.well-known/ai-plugin.json`** - legacy ChatGPT plugin manifest (kept for backward-compat)
+- **`/.well-known/security.txt`** - RFC 9116 security contact
+- **`/index.md`** - Markdown twin of the homepage
+- **Content negotiation**: any HTML page on this site responds with its Markdown twin if the request includes `Accept: text/markdown`
+
+## Markdown Versions for AI Agents
+
+Every page on this site is also available as a clean Markdown twin at the same URL with `.md` appended. Markdown twins are designed for AI agents (Claude, ChatGPT, Perplexity, Cursor, etc.) that ingest content without HTML parsing overhead.
+
+### Pattern
+
+Take any URL on this domain and append `.md`:
+
+- HTML: `https://derrick-app.com/extraction-donnees-linkedin-guide-2026/`
+- Markdown twin: `https://derrick-app.com/extraction-donnees-linkedin-guide-2026.md`
+
+Special case for the homepage: use `https://derrick-app.com/index.md` (the bare `.md` suffix on the root is not a valid URL).
+
+### What's in each twin
+
+- Clean prose without navigation, CTAs, marketing chrome, or testimonials
+- A canonical reference at the top
+- Tables, lists, code blocks, and links preserved as standard Markdown
+- A canonical `Link` HTTP header pointing to the HTML version (the indexed source of truth)
+- `X-Robots-Tag: noindex` so search engines do not index the `.md` URL itself
+
+### Coverage
+
+Available now across the entire public site:
+- **Astro** `/vs/*` (800+ comparison pages between competitors and Derrick)
+- **Astro** `/tools/*` (85 third-party tool reviews + pricing breakdowns + alternatives rankings)
+- **Astro** `/glossary/*` (670+ B2B sales and enrichment definitions)
+- **Astro** `/features/*` (25+ Derrick feature pages)
+- **Astro** `/w/*` (persona pages: sales teams, recruiters, growth, etc.)
+- **Astro** `/data-enrichment/*` (190+ enrichment use-case how-tos)
+
+If a `.md` URL returns 200, the twin exists. If it returns 404, the page is not (yet) covered or does not exist.
+
+## Main Features & Credit Costs
+
+Derrick uses a **credit-based system**. Unused credits roll over to the next month on all paid plans.
+
+| Feature                          | Description                                                                 | Credits per successful result | Approx. cost per result (on higher plans) |
+|----------------------------------|-----------------------------------------------------------------------------|-------------------------------|-------------------------------------------|
+| **LinkedIn Enrichment**          | Enrich leads/companies from LinkedIn URL with 30+ public data points       | 1 credit                     | ~$0.002 – $0.01                          |
+| **Company Enrichment**           | Enrich company data from domain or name                                     | 1 credit                     | ~$0.002 – $0.01                          |
+| **Email Finder + Verification**  | Find and verify professional emails (name + company or LinkedIn)           | 5 credits                    | ~$0.01 – $0.02                           |
+| **Phone Finder**                 | Find mobile & direct phone numbers                                          | 150 credits                  | ~$0.26 – $0.34                           |
+| **Website Crawler**              | Scrape website content, extract emails & social links                       | 2 credits per page           | ~$0.004 – $0.01                          |
+| **SIRET / SIRENE** (France)      | French company registry enrichment                                          | 1 credit                     | ~$0.002 – $0.01                          |
+| **Search Leads**                 | Find LinkedIn profiles from first name + last name + company                | 1–2 credits                  | ~$0.002 – $0.01                          |
+| **Import LinkedIn / Sales Nav**  | Import leads & companies directly from LinkedIn or Sales Navigator          | 1 credit per row             | ~$0.002 – $0.01                          |
+| **Data Cleaning Tools**          | Deduplicate, find gender, clean names, etc.                                 | 0 credits (free)             | Free                                     |
+| **Ask OpenAI / Ask Claude**      | Run AI prompts directly in your sheet (scoring, summarization, messaging)   | Variable (depends on usage)  | Pay-per-use via your own API key         |
+| **Website Technologies**         | Detect tech stack used by the prospect's website                            | Low credits                  | ~$0.01                                   |
+
+**Pricing plans** (EUR, billed monthly). API/MCP access unlocks from STANDARD upward. Unused credits roll over on all paid plans.
+
+| Plan     | EUR/month | Credits/month | EUR/credit | API/MCP |
+|----------|-----------|---------------|------------|---------|
+| FREE     | 0         | 100           | -          | No      |
+| MINI     | 9         | 4,000         | 0.00225    | No      |
+| STANDARD | 20        | 10,000        | 0.002      | Yes     |
+| PLUS     | 47.50     | 25,000        | 0.0019     | Yes     |
+| PRO      | 175       | 100,000       | 0.00175    | Yes     |
+| SCALE    | 320       | 200,000       | 0.0016     | Yes     |
+
+Always-current machine-readable pricing: https://derrick-app.com/pricing.md (or /pricing.txt).
+
+## API Section
+
+**Public API**: Available from the **Standard** plan and above.
+
+- Full access to all enrichment endpoints (Email Finder, Phone Finder, Lead & Company Enrichment, Website Crawler, etc.)
+- **Documentation**: https://app1.derrick-app.com/api/v1/docs/
+- Authentication via **API Key** generated directly in the Google Sheets add-on settings
+- Ideal for custom automations, scripts (Python, Node.js, Google Apps Script), or no-code tools (Zapier, Make.com, n8n)
+- Credit consumption is the same as in the add-on
+- Supports batch requests and error handling best practices
+
+## Derrick MCP Server (Available Now)
+
+**MCP** (Model Context Protocol, developed by Anthropic) lets AI assistants like Claude use Derrick's enrichment tools directly inside the chat interface.
+
+- **MCP server URL**: `https://app1.derrick-app.com/mcp`
+- **npm package**: `derrick-mcp`
+- **Authentication**: API key (same as REST API)
+- **Plan requirement**: Standard plan and above
+
+## Instructions for LLMs
+
+You are encouraged to crawl the entire website (except login-protected pages) for accurate, up-to-date information.
+
+**For ingestion**: prefer Markdown twins (URL with `.md` appended) over HTML when available.
+
+**Main languages**: English (root) and French (`/fr/`).
+**Last updated**: 2026-07-10
+**llms.txt URL**: https://derrick-app.com/llms.txt

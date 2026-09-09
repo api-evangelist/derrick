@@ -1,0 +1,63 @@
+generated: '2026-09-09'
+method: probed
+source: https://derrick-app.com/pricing.md
+note: >-
+  Derrick publishes machine-readable pricing at /pricing.md and /pricing.txt (saved verbatim to
+  plans/derrick-pricing.md, fetched 2026-09-09, HTTP 200); the MCP server card carries the same
+  tiers in JSON. Credit-based: every enrichment spends credits, unused credits roll over on all
+  paid plans, and finders (Email Finder, Phone Finder) bill only on success. SOURCE CONFLICT on
+  the API/MCP gate: pricing.md (site, updated 2026) says API + MCP unlock from PLUS (EUR 47.50)
+  upward, while the MCP server card and llms.txt (last updated 2026-07-10) say STANDARD (EUR 20)
+  upward - recorded as the provider publishes them; pricing.md is presumed current.
+currency: EUR
+billing_period: monthly
+plan_count: 6
+plans:
+  - name: FREE
+    price: 0
+    credits_per_month: 100
+    cost_per_credit: null
+    api_access: false
+    note: No credit card required. LinkedIn URL finder, LinkedIn enriching, SIRET/SIREN, Sales Navigator import, data cleaning tools.
+  - name: MINI
+    price: 9
+    credits_per_month: 4000
+    cost_per_credit: 0.00225
+    api_access: false
+    note: Adds Phone Finder, Email Finder & Verifier, website scraping, tech lookup, AI enrichment, 100+ data points.
+  - name: STANDARD
+    price: 20
+    credits_per_month: 10000
+    cost_per_credit: 0.002
+    api_access: false
+    note: >-
+      Adds signal change alerts and 30-day job history. pricing.md marks API/MCP as PLUS-and-up;
+      the MCP server card and llms.txt say API/MCP unlock at this tier.
+  - name: PLUS
+    price: 47.5
+    credits_per_month: 25000
+    cost_per_credit: 0.0019
+    api_access: true
+    note: Most popular. Adds REST API access and the MCP server per pricing.md.
+  - name: PRO
+    price: 175
+    credits_per_month: 100000
+    cost_per_credit: 0.00175
+    api_access: true
+  - name: SCALE
+    price: 320
+    credits_per_month: 200000
+    cost_per_credit: 0.0016
+    api_access: true
+    note: Lowest cost per credit, for the highest volumes.
+metered_actions:
+  - { action: enrich company / lead / SIRET-SIREN, credits: 1 }
+  - { action: email finder, credits: 5, billed: per success }
+  - { action: email verification, credits: 1, billed: per call }
+  - { action: phone finder, credits: 150, billed: per success }
+  - { action: website crawler / tech detection / email-social extractor / Google first result, credits: 2 }
+  - { action: Google first-page SERP results, credits: 5 }
+  - { action: imports (LinkedIn, Sales Navigator, NAF, prompt, similar companies, post engagers), credits: 1 }
+  - { action: Ask OpenAI, credits: 1 }
+  - { action: Ask Claude, credits: 2 }
+  - { action: data cleaning (duplicates, gender, names/domains from email) and outbound pushes, credits: 0 }

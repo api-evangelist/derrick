@@ -1,0 +1,1398 @@
+name: Derrick MCP Server
+generated: '2026-09-09'
+method: searched
+source: https://derrick-app.com/.well-known/mcp/server-card.json + https://app1.derrick-app.com/api/v1/docs/actions
+  + npm derrick-mcp@0.3.0 (dist/tools.js) + live probe of https://app1.derrick-app.com/mcp
+status: official
+deployment:
+  mode: both
+  endpoint: https://app1.derrick-app.com/mcp
+  install: npx -y derrick-mcp
+  package: https://www.npmjs.com/package/derrick-mcp
+  auth: oauth
+  verified: probed
+transport:
+  remote: streamable-http
+  local: stdio
+authentication:
+  note: 'Remote endpoint answers anonymous POSTs with 401 Bearer invalid_token and RFC 9728 resource_metadata (probed
+    2026-09-09). OAuth 2.0 authorization-code + PKCE with dynamic client registration per RFC 8414 metadata on app1.derrick-app.com;
+    a Derrick API key sent as Authorization: Bearer also works per the server card. The stdio package reads DERRICK_API_KEY
+    or ~/.derrick-mcp/.env. API keys require the Standard plan or above per the server card and llms.txt (pricing.md
+    says Plus and above - see plans artifact).'
+  oauth_authorization_server: https://app1.derrick-app.com/.well-known/oauth-authorization-server
+  oauth_protected_resource: https://app1.derrick-app.com/.well-known/oauth-protected-resource/mcp
+server_card: https://derrick-app.com/.well-known/mcp/server-card.json
+actions_catalog:
+  url: https://app1.derrick-app.com/api/v1/docs/actions
+  note: Unauthenticated machine-readable catalog the MCP server itself uses to register dynamic tools at startup;
+    saved verbatim to mcp/derrick-actions-catalog.json. Each action maps 1:1 to POST /api/v1/{apiSlug} on the REST
+    API (X-API-Key auth).
+  file: derrick-actions-catalog.json
+  mcp_version:
+    min: 0.3.0
+    recommended: 0.3.0
+    updateCommand: npm install -g derrick-mcp@latest
+tool_count:
+  dynamic: 32
+  static: 5
+static_tools:
+- name: derrick_configure
+  title: Configure Derrick API key
+  description: Save your Derrick API key locally (stdio mode only).
+  inputs:
+  - name: api_key
+    type: string
+    required: true
+- name: derrick_help
+  title: Derrick help
+  description: Overview of Derrick features, credits, errors, pricing, and scaling guidance.
+  inputs:
+  - name: topic
+    type: string
+    required: false
+    description: credits | errors | pricing | scale | features
+- name: derrick_credits
+  title: Derrick credits balance
+  description: Last known credits balance from the in-session cache.
+  inputs: []
+- name: derrick_account
+  title: Derrick account info
+  description: Live account info and remaining credits (GET /api/v1/account).
+  inputs: []
+- name: derrick_upgrade
+  title: Upgrade Derrick plan
+  description: Returns a Stripe Checkout URL for a chosen plan, or the live plan list (POST /api/v1/upgrade).
+  inputs:
+  - name: plan
+    type: string
+    required: false
+    description: MINI, STANDARD, PLUS, or PRO. Omit to fetch the live plan list.
+tools:
+- name: derrick_google_maps_by_prompt
+  title: Google Maps by prompt
+  description: 'Type what you are looking for and where (e.g. "growth agency in London") and import up to 200 businesses
+    into a new sheet: name, category, rating, reviews, phone, website, address and attributes.'
+  category: AI
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/google_maps_by_prompt
+  inputs:
+  - name: prompt
+    type: string
+    required: true
+    description: Type what you are looking for and where, e.g. "agence seo marseille" or "growth agency in London".
+      Always include a location.
+- name: derrick_import_leads_from_prompt
+  title: Import leads from prompt
+  description: Describe your ideal lead in plain language and import the matching Sales Navigator profiles into
+    a new sheet.
+  category: AI
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/import_leads_from_prompt
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: Describe your ideal lead
+  - name: page
+    type: string
+    required: false
+    description: Page to start from
+- name: derrick_get_name_from_email
+  title: Find Name from Email
+  description: Find firstname, lastname and domain from an email.
+  category: clean
+  credits_per_run: 0
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/get_name_from_email
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: Select email column
+- name: derrick_find_gender
+  title: Find Gender from Name
+  description: Remove all special characters from a full name and find their firstname, lastname and gender.
+  category: clean
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/find_gender
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: Select fullname column
+- name: derrick_verify_email
+  title: Verify Email
+  description: Check if an email address is valid.
+  category: clean::Lead
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/verify_email
+  inputs:
+  - name: email
+    type: string
+    required: true
+    description: Email address to verify
+- name: derrick_is_hiring
+  title: Check if a Company is Hiring
+  description: For each LinkedIn company URL, check whether the company currently has open roles on LinkedIn Jobs,
+    and get the first matching job titles. Narrow it down by country, posting date or keywords. No LinkedIn account
+    needed.
+  category: company::enrich
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/is_hiring
+  inputs:
+  - name: companyLinkedinUrl
+    type: string
+    required: true
+    description: LinkedIn company URL column
+  - name: country
+    type: string
+    required: false
+    description: Country
+    options:
+    - 92000000|Worldwide
+    - 104859837|Abu Musa
+    - 116068867|Abyei
+    - 103537801|Africa
+    - 119365922|Åland Islands
+    - 102845717|Albania
+    - 106395874|Algeria
+    - 102431220|American Samoa
+    - 106296266|Andorra
+    - 105371935|Angola
+    - 102287072|Anguilla
+    - 100428639|Antarctica
+    - 100270819|Antigua and Barbuda
+    - 91000003|APAC
+    - 91000004|APJ
+    - 100446943|Argentina
+    - 103030111|Armenia
+    - 105763200|Aruba
+    - 102393603|Asia
+    - 101452733|Australia
+    - 103883259|Austria
+    - 103483173|Baker Island
+    - 106215326|Bangladesh
+    - 102118611|Barbados
+    - 101705918|Belarus
+    - 100565514|Belgium
+    - 91000005|Benelux
+    - 101519029|Benin
+    - 100061709|Bermuda
+    - 103613266|Bhutan
+    - 104379274|Bolivia
+    - 102869081|Bosnia and Herzegovina
+    - 105698121|Botswana
+    - 102127336|Bouvet Island
+    - 106057199|Brazil
+    - 106498958|British Indian Ocean Territory
+    - 105534858|British Virgin Islands
+    - 103809722|Brunei
+    - 105333783|Bulgaria
+    - 100587095|Burkina Faso
+    - 100800406|Burundi
+    - 102500897|Cambodia
+    - 105745966|Cameroon
+    - 101174742|Canada
+    - 101679268|Cape Verde
+    - 101679506|Cayman Islands
+    - 100134827|Central African Republic
+    - 104655384|Chad
+    - 104621616|Chile
+    - 102890883|China
+    - 102893931|Christmas Island
+    - 108490877|Clipperton Island
+    - 103188119|Cocos (Keeling) Islands
+    - 100876405|Colombia
+    - 103069791|Comoros
+    - 103118752|Cook Islands
+    - 101739942|Costa Rica
+    - 103295271|Côte d'Ivoire
+    - 104688944|Croatia
+    - 106429766|Cuba
+    - 103619688|Curacao
+    - 106774002|Cyprus
+    - 104508036|Czechia
+    - 91000006|DACH
+    - 101271829|Democratic Republic of the Congo
+    - 104514075|Denmark
+    - 100371290|Djibouti
+    - 102368675|Dokdo / Takeshima
+    - 100720695|Dominica
+    - 105057336|Dominican Republic
+    - 106373116|Ecuador
+    - 106155005|Egypt
+    - 106522560|El Salvador
+    - 91000007|EMEA
+    - 105141335|Equatorial Guinea
+    - 104219996|Eritrea
+    - 102974008|Estonia
+    - 106768907|Eswatini
+    - 100212432|Ethiopia
+    - 100506914|Europe
+    - 104961595|Falkland Islands
+    - 104630756|Faroe Islands
+    - 102762290|Federated States of Micronesia
+    - 105733447|Fiji
+    - 100456013|Finland
+    - 105015875|France
+    - 105001561|French Guiana
+    - 102681285|French Polynesia
+    - 104827874|French Southern and Antarctic Lands
+    - 104471338|Gabon
+    - 104369891|Gaza Strip
+    - 106315325|Georgia
+    - 101282230|Germany
+    - 105769538|Ghana
+    - 100674501|Gibraltar
+    - 100796347|Golan Subdistrict
+    - 104677530|Greece
+    - 103705642|Greenland
+    - 104232339|Guadeloupe
+    - 107006862|Guam
+    - 104019891|Guernsey
+    - 100099594|Guinea
+    - 100115557|Guinea-Bissau
+    - 105836293|Guyana
+    - 100993490|Haiti
+    - 100737582|Heard Island and McDonald Islands
+    - 101937718|Honduras
+    - 103291313|Hong Kong SAR
+    - 100584550|Howland Island
+    - 100288700|Hungary
+    - 105238872|Iceland
+    - 117196730|Île de la Navasse / Navassa Island (Disputed area USA-HAITI)
+    - 102713980|India
+    - 102478259|Indonesia
+    - 101934083|Iran
+    - 106725625|Iraq
+    - 104738515|Ireland
+    - 106316481|Isle of Man
+    - 101620260|Israel
+    - 103350119|Italy
+    - 105126983|Jamaica
+    - 105249717|Jan Mayen
+    - 101355337|Japan
+    - 103620124|Jarvis Island
+    - 102705533|Jersey
+    - 104736323|Johnston Atoll
+    - 103710677|Jordan
+    - 106049128|Kazakhstan
+    - 100710459|Kenya
+    - 105480089|Kingman Reef
+    - 104742735|Kiribati
+    - 104640522|Kosovo
+    - 103239229|Kuwait
+    - 103490790|Kyrgyzstan
+    - 100664862|Laos
+    - 105411415|Lapthal
+    - 104341318|Latvia
+    - 101834488|Lebanon
+    - 103712797|Lesotho
+    - 106579411|Liberia
+    - 100878084|Liechtenstein
+    - 101464403|Lithuania
+    - 104042105|Luxembourg
+    - 101316508|Macao SAR
+    - 105587166|Madagascar
+    - 105992277|Malawi
+    - 102903149|Malaya Kuril’skaya Gryada / Habomai Islands
+    - 106808692|Malaysia
+    - 102161637|Maldives
+    - 100961908|Malta
+    - 106516799|Marshall Islands
+    - 103091690|Martinique
+    - 106950838|Mauritania
+    - 106931611|Mauritius
+    - 104097939|Mayotte
+    - 91000008|MENA
+    - 103323778|Mexico
+    - 102808143|Midway Atoll
+    - 106178099|Moldova
+    - 101352147|Monaco
+    - 102396337|Mongolia
+    - 100733275|Montenegro
+    - 101150476|Montserrat
+    - 102787409|Morocco
+    - 100474128|Mozambique
+    - 104136533|Myanmar
+    - 106682822|Namibia
+    - 104630404|Nepal
+    - 102890719|Netherlands
+    - 105535747|New Caledonia
+    - 105490917|New Zealand
+    - 105517145|Nicaragua
+    - 103550069|Niger
+    - 105365761|Nigeria
+    - 102139488|Niue
+    - 118365287|No man's land
+    - 91000009|Nordics
+    - 116224156|Norfolk Island
+    - 102221843|North America
+    - 102356536|North Korea
+    - 103420483|North Macedonia
+    - 103666514|Northern Mariana Islands
+    - 103819153|Norway
+    - 91000010|Oceania
+    - 103619019|Oman
+    - 101265267|Ostrov Iturup / Etorotu Island
+    - 105839105|Ostrov Kunashir / Kunashiri Island
+    - 105770768|Ostrov Shikotan / Shikotan Island
+    - 101022442|Pakistan
+    - 106779877|Palau
+    - 93000000|Palestinian Authority
+    - 103683990|Palmyra Atoll
+    - 100808673|Panama
+    - 100152180|Papua New Guinea
+    - 101839269|Paracel Islands
+    - 104065273|Paraguay
+    - 102927786|Peru
+    - 103121230|Philippines
+    - 104322374|Pitcairn Islands
+    - 105072130|Poland
+    - 100364837|Portugal
+    - 105245958|Puerto Rico
+    - 104170880|Qatar
+    - 92000001|Remote
+    - 106796687|Republic of the Congo
+    - 104265812|Reunion
+    - 106670623|Romania
+    - 101728296|Russia
+    - 103547315|Rwanda
+    - 102129144|Saba
+    - 100936035|Saint Barthélemy
+    - 105392771|Saint Helena, Ascension and Tristan da Cunha
+    - 102098694|Saint Kitts and Nevis
+    - 104022923|Saint Lucia
+    - 103917985|Saint Martin (France)
+    - 102024132|Saint Pierre and Miquelon
+    - 104703990|Saint Vincent and the Grenadines
+    - 104031721|Samoa
+    - 105730022|San Marino
+    - 100594556|Sang
+    - 106867470|São Tomé and Príncipe
+    - 100459316|Saudi Arabia
+    - 103587512|Senegal
+    - 105090025|Senkaku Islands/Diaoyutai Qundao
+    - 107007050|Seychelles
+    - 106524187|Sierra Leone
+    - 102454443|Singapore
+    - 100552696|Sint Eustatius
+    - 105519673|Sint Maarten
+    - 103119917|Slovakia
+    - 106137034|Slovenia
+    - 104980134|Solomon Islands
+    - 104725424|Somalia
+    - 104035573|South Africa
+    - 104514572|South America
+    - 103665423|South Georgia And South Sandwich Islands
+    - 105149562|South Korea
+    - 103622308|South Sudan
+    - 105646813|Spain
+    - 101522505|Spratly Islands
+    - 100446352|Sri Lanka
+    - 106740205|Sudan
+    - 105530931|Suriname
+    - 104980232|Svalbard
+    - 105117694|Sweden
+    - 106693272|Switzerland
+    - 106714035|Syria
+    - 104187078|Taiwan
+    - 104604145|Tanzania
+    - 105146118|Thailand
+    - 106662619|The Bahamas
+    - 106100033|The Gambia
+    - 101101678|Timor-Leste
+    - 103603395|Togo
+    - 100212364|Tokelau
+    - 106947126|Trinidad and Tobago
+    - 105757845|Tunb Islands
+    - 102134353|Tunisia
+    - 102105699|Türkiye
+    - 105449295|Turkmenistan
+    - 100771715|Turks and Caicos Islands
+    - 103609605|Tuvalu
+    - 106943612|Uganda
+    - 102264497|Ukraine
+    - 104305776|United Arab Emirates
+    - 101165590|United Kingdom
+    - 103644278|United States
+    - 111818742|United States Minor Outlying Islands
+    - 100867946|Uruguay
+    - 102119762|US Virgin Islands
+    - 107734735|Uzbekistan
+    - 102185308|Vanuatu
+    - 107163060|Vatican City
+    - 101490751|Venezuela
+    - 104195383|Vietnam
+    - 105498681|Wake Island
+    - 104246629|Wallis and Futuna
+    - 101004336|West Bank
+    - 105962095|Yemen
+    - 102120260|Zambia
+    - 101367137|Zimbabwe
+  - name: datePosted
+    type: string
+    required: false
+    description: Date posted
+    options:
+    - 24h
+    - 7d
+    - 30d
+  - name: keyword
+    type: string
+    required: false
+    description: Keywords
+- name: derrick_data_gouv
+  title: Enrich company by SIRET, SIREN or name
+  description: Enrich a French company from its SIRET, SIREN, or just its name. Numbers resolve exactly; a name
+    is matched to the best company with a confidence score and the matched name, so you can trust or filter the
+    result. Add a departement to disambiguate.
+  category: enrich::company
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/data_gouv
+  inputs:
+  - name: siret
+    type: string
+    required: true
+    description: SIRET (14 chiffres), SIREN (9 chiffres) OU nom d'entreprise
+  - name: locationCode
+    type: string
+    required: false
+    description: Département (narrows a company-name search)
+    options:
+    - '01'
+    - '02'
+    - '03'
+    - '04'
+    - '05'
+    - '06'
+    - '07'
+    - 08
+    - 09
+    - '10'
+    - '11'
+    - '12'
+    - '13'
+    - '14'
+    - '15'
+    - '16'
+    - '17'
+    - '18'
+    - '19'
+    - '21'
+    - '22'
+    - '23'
+    - '24'
+    - '25'
+    - '26'
+    - '27'
+    - '28'
+    - '29'
+    - 2A
+    - 2B
+    - '30'
+    - '31'
+    - '32'
+    - '33'
+    - '34'
+    - '35'
+    - '36'
+    - '37'
+    - '38'
+    - '39'
+    - '40'
+    - '41'
+    - '42'
+    - '43'
+    - '44'
+    - '45'
+    - '46'
+    - '47'
+    - '48'
+    - '49'
+    - '50'
+    - '51'
+    - '52'
+    - '53'
+    - '54'
+    - '55'
+    - '56'
+    - '57'
+    - '58'
+    - '59'
+    - '60'
+    - '61'
+    - '62'
+    - '63'
+    - '64'
+    - '65'
+    - '66'
+    - '67'
+    - '68'
+    - '69'
+    - '70'
+    - '71'
+    - '72'
+    - '73'
+    - '74'
+    - '75'
+    - '76'
+    - '77'
+    - '78'
+    - '79'
+    - '80'
+    - '81'
+    - '82'
+    - '83'
+    - '84'
+    - '85'
+    - '86'
+    - '87'
+    - '88'
+    - '89'
+    - '90'
+    - '91'
+    - '92'
+    - '93'
+    - '94'
+    - '95'
+    - '971'
+    - '972'
+    - '973'
+    - '974'
+    - '976'
+- name: derrick_website_contact_social
+  title: Enrich Website with Emails, Phones & Social Profiles
+  description: Extracts emails, phone numbers, and social media links from a website.
+  category: enrich::Company
+  credits_per_run: 2
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/website_contact_social
+  inputs:
+  - name: website_url
+    type: string
+    required: true
+    description: Enter a full website URL (e.g., example.com)
+- name: derrick_find_tech
+  title: Enrich Company with Website Technologies
+  description: Get website technology (CMS, Framework, Analytics, CDN, Hosting, etc.)
+  category: enrich::Company
+  credits_per_run: 2
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/find_tech
+  inputs:
+  - name: website_url
+    type: string
+    required: true
+    description: Choose Website URL
+- name: derrick_website_crawler
+  title: Enrich Website with Page Content
+  description: 'Extract essential web page content: title, meta description, headings (H1-H5), page text (limited
+    to 50,000 characters), and total character count.'
+  category: enrich::Company
+  credits_per_run: 2
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/website_crawler
+  inputs:
+  - name: url_column
+    type: string
+    required: true
+    description: Choose URL column
+- name: derrick_google_news
+  title: Google News results
+  description: 'For each company in your sheet, return its most relevant recent Google News article: title, link,
+    publisher and date.'
+  category: enrich::google
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/google_news
+  inputs:
+  - name: companyName
+    type: string
+    required: true
+    description: Company name to search news for
+  - name: period
+    type: string
+    required: true
+    description: How far back to search
+    options:
+    - 1d
+    - 7d
+    - 30d
+    - 90d
+    - 180d
+    - 365d
+  - name: language
+    type: string
+    required: false
+    description: Language of the news sources
+    options:
+    - en
+    - fr
+    - de
+    - es
+    - it
+    - pt
+    - nl
+  - name: context
+    type: string
+    required: false
+    description: Context (e.g. telecom)
+- name: derrick_enrich_companies
+  title: Enrich Company with LinkedIn Data
+  description: Enrich companies with +15 attributes from a LinkedIn company URL
+  category: enrich::linkedin::company
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/enrich_companies
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: LinkedIn company URL column
+- name: derrick_linkedin_profile_followers_count
+  title: Enrich LinkedIn leads with Followers & Connections Count
+  description: Enrich profiles with follower & connections count
+  category: enrich::linkedin::lead
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/linkedin_profile_followers_count
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: LinkedIn profiles URL column
+- name: derrick_enrich_profile
+  title: Enrich Leads Profile with Data
+  description: Enrich profiles with +15 attributes from a LinkedIn profile URL
+  category: enrich::linkedin::lead::essential
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/enrich_profile
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: LinkedIn profiles URL column
+- name: derrick_find_email
+  title: Find Work Email
+  description: Find professional email from Fullname, Company name & Linkedin Company URL.
+  category: find::lead::essential
+  credits_per_run: 5
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/find_email
+  inputs:
+  - name: fullName
+    type: string
+    required: true
+    description: 'Select fullName column:'
+  - name: company
+    type: string
+    required: true
+    description: 'Select company column:'
+  - name: linkedinCompanyURL
+    type: string
+    required: false
+    description: 'Select linkedin company url column:'
+- name: derrick_find_phone
+  title: Find Mobile Phone from LinkedIn Profile
+  description: Find any phone from Linkedin Regular Profil Url.
+  category: find::Lead::Essential
+  credits_per_run: 150
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/find_phone
+  inputs:
+  - name: linkedinProfilUrl
+    type: string
+    required: true
+    description: 'Select LinkedinUrl :'
+- name: derrick_search_companies
+  title: Find Linkedin Company Profile from Name
+  description: Search company Linkedin URL from company name
+  category: find::linkedin::company::essential
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/search_companies
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: Company name column
+- name: derrick_search_linkedin_profile
+  title: Find Linkedin profile from Name and Company
+  description: Find LinkedIn profiles URL from fullname and company (recommended).
+  category: find::linkedin::lead::essential
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/search_linkedin_profile
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: Fullname column
+  - name: companyValue
+    type: string
+    required: false
+    description: Company column
+- name: derrick_import_salesnav_leads
+  title: Import Leads from LinkedIn Sales Navigator
+  description: Import leads from a LinkedIn Sales Navigator company URL
+  category: import
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/import_salesnav_leads
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: Paste a LinkedIn sales nav URL
+  - name: page
+    type: string
+    required: false
+    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the URL's page.
+- name: derrick_import_companies_from_prompt
+  title: Import Companies by prompt
+  description: Find companies that semantically match a prompt, optionally filtered by country.
+  category: import::company
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/import_companies_from_prompt
+  inputs:
+  - name: description
+    type: string
+    required: true
+    description: Describe what kind of company you are looking for.
+  - name: country
+    type: string
+    required: false
+    description: Optional country filter. Pick one or more.
+  - name: numberOfResults
+    type: string
+    required: false
+    description: Max number of companies to return
+    options:
+    - '10'
+    - '20'
+    - '50'
+    - '100'
+    - '200'
+    - '300'
+  - name: page
+    type: string
+    required: false
+    description: Result page to fetch (API only, 0-indexed). Each page returns up to 20 companies. Defaults to 0.
+- name: derrick_companies_by_naf
+  title: Import companies by NAF code
+  description: For each NAF activity code, import the matching French companies from the public SIRENE registry.
+    Add an optional departement to narrow the search. MAX 10k result / search.
+  category: import::company
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/companies_by_naf
+  inputs:
+  - name: nafCode
+    type: string
+    required: true
+    description: NAF/APE activity code, e.g. 10.71C (bakeries). 1071C also works.
+  - name: locationCode
+    type: string
+    required: false
+    description: Département
+    options:
+    - '01'
+    - '02'
+    - '03'
+    - '04'
+    - '05'
+    - '06'
+    - '07'
+    - 08
+    - 09
+    - '10'
+    - '11'
+    - '12'
+    - '13'
+    - '14'
+    - '15'
+    - '16'
+    - '17'
+    - '18'
+    - '19'
+    - '21'
+    - '22'
+    - '23'
+    - '24'
+    - '25'
+    - '26'
+    - '27'
+    - '28'
+    - '29'
+    - 2A
+    - 2B
+    - '30'
+    - '31'
+    - '32'
+    - '33'
+    - '34'
+    - '35'
+    - '36'
+    - '37'
+    - '38'
+    - '39'
+    - '40'
+    - '41'
+    - '42'
+    - '43'
+    - '44'
+    - '45'
+    - '46'
+    - '47'
+    - '48'
+    - '49'
+    - '50'
+    - '51'
+    - '52'
+    - '53'
+    - '54'
+    - '55'
+    - '56'
+    - '57'
+    - '58'
+    - '59'
+    - '60'
+    - '61'
+    - '62'
+    - '63'
+    - '64'
+    - '65'
+    - '66'
+    - '67'
+    - '68'
+    - '69'
+    - '70'
+    - '71'
+    - '72'
+    - '73'
+    - '74'
+    - '75'
+    - '76'
+    - '77'
+    - '78'
+    - '79'
+    - '80'
+    - '81'
+    - '82'
+    - '83'
+    - '84'
+    - '85'
+    - '86'
+    - '87'
+    - '88'
+    - '89'
+    - '90'
+    - '91'
+    - '92'
+    - '93'
+    - '94'
+    - '95'
+    - '971'
+    - '972'
+    - '973'
+    - '974'
+    - '976'
+- name: derrick_serp_first_result
+  title: Import First Google Organic Result
+  description: Enter text made of the column you want to search
+  category: import::google
+  credits_per_run: 2
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/serp_first_result
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: Select values you want to search
+  - name: country
+    type: string
+    required: false
+    description: Country
+    options:
+    - us
+    - gb
+    - ca
+    - au
+    - ie
+    - fr
+    - de
+    - es
+    - it
+    - nl
+    - be
+    - ch
+    - at
+    - pt
+    - lu
+    - se
+    - dk
+    - 'no'
+    - fi
+    - pl
+    - cz
+    - ro
+    - gr
+    - br
+    - mx
+    - ar
+    - in
+    - sg
+    - jp
+    - kr
+    - ae
+    - il
+    - za
+    - tr
+  - name: language
+    type: string
+    required: false
+    description: Language
+    options:
+    - en
+    - fr
+    - de
+    - es
+    - it
+    - nl
+    - pt
+    - sv
+    - da
+    - 'no'
+    - fi
+    - pl
+    - cs
+    - ro
+    - el
+    - tr
+    - ja
+    - ko
+    - zh
+    - ar
+    - he
+- name: derrick_serp_first_page
+  title: Import First-Page Google Organic Results
+  description: Enter text made of the column you want to search
+  category: import::google
+  credits_per_run: 3
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/serp_first_page
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: Select values you want to search
+  - name: country
+    type: string
+    required: false
+    description: Country
+    options:
+    - us
+    - gb
+    - ca
+    - au
+    - ie
+    - fr
+    - de
+    - es
+    - it
+    - nl
+    - be
+    - ch
+    - at
+    - pt
+    - lu
+    - se
+    - dk
+    - 'no'
+    - fi
+    - pl
+    - cz
+    - ro
+    - gr
+    - br
+    - mx
+    - ar
+    - in
+    - sg
+    - jp
+    - kr
+    - ae
+    - il
+    - za
+    - tr
+  - name: language
+    type: string
+    required: false
+    description: Language
+    options:
+    - en
+    - fr
+    - de
+    - es
+    - it
+    - nl
+    - pt
+    - sv
+    - da
+    - 'no'
+    - fi
+    - pl
+    - cs
+    - ro
+    - el
+    - tr
+    - ja
+    - ko
+    - zh
+    - ar
+    - he
+- name: derrick_find_similar_companies
+  title: Import Similar Companies
+  description: Import similar companies from a LinkedIn company ID, optionally filtered by country.
+  category: import::linkedin
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/find_similar_companies
+  inputs:
+  - name: linkedinId
+    type: string
+    required: true
+    description: LinkedIn company ID of the reference company
+  - name: country
+    type: string
+    required: false
+    description: Optional country filter. Pick one or more.
+  - name: maxNumberOfResults
+    type: string
+    required: false
+    description: Max number of companies to return
+    options:
+    - '10'
+    - '20'
+    - '50'
+    - '100'
+    - '200'
+  - name: page
+    type: string
+    required: false
+    description: Result page to fetch (API only, 0-indexed). Each page returns up to 20 companies. Defaults to 0.
+- name: derrick_import_profile_basic
+  title: Import Leads from LinkedIn
+  description: Import leads from a LinkedIn people search URL
+  category: import::linkedin
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/import_profile_basic
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: Paste a LinkedIn search URL
+  - name: page
+    type: string
+    required: false
+    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the URL's page.
+- name: derrick_import_salesnav_companies
+  title: Import Companies from Sales Navigator
+  description: Import companies from a LinkedIn Sales Navigator company URL
+  category: import::linkedin
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/import_salesnav_companies
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: Paste a LinkedIn Sales Nav company URL
+  - name: page
+    type: string
+    required: false
+    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the URL's page.
+- name: derrick_find_staff_members
+  title: Import a company's people (current & former)
+  description: 'Lists people who work or worked at a company: name, role, location and LinkedIn profile. Optionally
+    filter by job function. No Sales Navigator needed.'
+  category: import::linkedin::company
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/find_staff_members
+  inputs:
+  - name: company
+    type: string
+    required: true
+    description: 'Company LinkedIn URL or numeric companyId:'
+  - name: currentFunction
+    type: string
+    required: false
+    description: Filter by linkedin job function
+    options:
+    - '1'
+    - '2'
+    - '3'
+    - '4'
+    - '5'
+    - '6'
+    - '7'
+    - '8'
+    - '9'
+    - '10'
+    - '11'
+    - '12'
+    - '13'
+    - '14'
+    - '15'
+    - '16'
+    - '17'
+    - '18'
+    - '19'
+    - '20'
+    - '21'
+    - '22'
+    - '23'
+    - '24'
+    - '25'
+    - '26'
+  - name: offset
+    type: string
+    required: false
+    description: Absolute result offset to start from (API only, 0-indexed). Defaults to 0.
+- name: derrick_import_companies_basic
+  title: Import Companies from LinkedIn
+  description: Import companies from a LinkedIn people search URL
+  category: import::linkedin::company::essential
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/import_companies_basic
+  inputs:
+  - name: queryValue
+    type: string
+    required: true
+    description: Paste a LinkedIn company search URL
+  - name: page
+    type: string
+    required: false
+    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the URL's page.
+- name: derrick_import_post_engagers
+  title: Import LinkedIn post likes & comments
+  description: List people who reacted to or commented on a LinkedIn post (name + profile URL + reaction type),
+    from the post URL.
+  category: import::linkedin::post
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/import_post_engagers
+  inputs:
+  - name: postUrl
+    type: string
+    required: true
+    description: LinkedIn post URL or activity id
+- name: derrick_search_leads_in_companies
+  title: Import LinkedIn Leads from Target Companies
+  description: '<strong>Find leads inside a list of target companies</strong>
+
+    <br/> - Select a Google Sheet column with company LinkedIn URLs
+
+    <br/> - Paste a <strong>Sales Navigator Lead</strong> search URL defining your lead criteria
+
+    <br/> - Get matching leads from those companies'
+  category: import::sales navigator::lead::company
+  credits_per_run: 1
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/search_leads_in_companies
+  inputs:
+  - name: company
+    type: string
+    required: true
+    description: LinkedIn company URL (numeric ID only)
+  - name: queryValue
+    type: string
+    required: true
+    description: Paste your SalesNav lead search URL
+  - name: page
+    type: string
+    required: false
+    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the URL's page.
+- name: derrick_push_to_lgm
+  title: Push lead to La Growth Machine
+  description: Push leads from Google Sheets into a La Growth Machine audience - LinkedIn URL plus any fields you
+    map (name, email, phone, company, custom attributes). Connect once, no CSV export.
+  category: push::La Growth Machine
+  credits_per_run: 0
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/push_to_lgm
+  inputs:
+  - name: audienceId
+    type: string
+    required: true
+    description: Lgm audience to use
+  - name: linkedinUrl
+    type: string
+    required: true
+    description: Lead LinkedIn profile URL
+  - name: firstname
+    type: string
+    required: false
+    description: Firstname
+  - name: lastname
+    type: string
+    required: false
+    description: Lastname
+  - name: gender
+    type: string
+    required: false
+    description: Gender (man or woman)
+  - name: bio
+    type: string
+    required: false
+    description: Bio
+  - name: companyName
+    type: string
+    required: false
+    description: Company name
+  - name: companyUrl
+    type: string
+    required: false
+    description: Company URL
+  - name: jobTitle
+    type: string
+    required: false
+    description: Job title
+  - name: profilePicture
+    type: string
+    required: false
+    description: Profile picture URL
+  - name: twitter
+    type: string
+    required: false
+    description: Twitter handle or URL
+  - name: proEmail
+    type: string
+    required: false
+    description: Professional email
+  - name: persoEmail
+    type: string
+    required: false
+    description: Personal email
+  - name: industry
+    type: string
+    required: false
+    description: Industry
+  - name: phone
+    type: string
+    required: false
+    description: Phone number
+  - name: crm_id
+    type: string
+    required: false
+    description: CRM ID
+  - name: location
+    type: string
+    required: false
+    description: Location
+  - name: relationsCount
+    type: string
+    required: false
+    description: Relations count
+  - name: leadId
+    type: string
+    required: false
+    description: Lead ID
+  - name: customAttribute1
+    type: string
+    required: false
+    description: Custom Attribute 1
+  - name: customAttribute2
+    type: string
+    required: false
+    description: Custom Attribute 2
+  - name: customAttribute3
+    type: string
+    required: false
+    description: Custom Attribute 3
+  - name: customAttribute4
+    type: string
+    required: false
+    description: Custom Attribute 4
+  - name: customAttribute5
+    type: string
+    required: false
+    description: Custom Attribute 5
+  - name: customAttribute6
+    type: string
+    required: false
+    description: Custom Attribute 6
+  - name: customAttribute7
+    type: string
+    required: false
+    description: Custom Attribute 7
+  - name: customAttribute8
+    type: string
+    required: false
+    description: Custom Attribute 8
+  - name: customAttribute9
+    type: string
+    required: false
+    description: Custom Attribute 9
+  - name: customAttribute10
+    type: string
+    required: false
+    description: Custom Attribute 10
+- name: derrick_push_to_lemlist
+  title: Push to lemlist
+  description: Add a lead to a lemlist campaign. Connect lemlist once, pick the campaign, map the email column (the
+    lead key), and optionally map lemlist lead fields and custom variables.
+  category: push::lemlist
+  credits_per_run: 0
+  rest_endpoint: POST https://app1.derrick-app.com/api/v1/push_to_lemlist
+  inputs:
+  - name: campaignId
+    type: string
+    required: true
+    description: lemlist campaign to add leads to
+  - name: email
+    type: string
+    required: true
+    description: Lead email (lemlist lead key)
+  - name: firstName
+    type: string
+    required: false
+    description: First name
+  - name: lastName
+    type: string
+    required: false
+    description: Last name
+  - name: companyName
+    type: string
+    required: false
+    description: Company name
+  - name: companyDomain
+    type: string
+    required: false
+    description: Company domain
+  - name: jobTitle
+    type: string
+    required: false
+    description: Job title
+  - name: linkedinUrl
+    type: string
+    required: false
+    description: LinkedIn profile URL
+  - name: phone
+    type: string
+    required: false
+    description: Phone
+  - name: picture
+    type: string
+    required: false
+    description: Profile picture URL
+  - name: icebreaker
+    type: string
+    required: false
+    description: Icebreaker / personalized line
+  - name: timezone
+    type: string
+    required: false
+    description: Timezone
+  - name: variable1
+    type: string
+    required: false
+    description: Custom variable 1 (used as {{variable1}} in lemlist)
+  - name: variable2
+    type: string
+    required: false
+    description: Custom variable 2 (used as {{variable2}} in lemlist)
+  - name: variable3
+    type: string
+    required: false
+    description: Custom variable 3 (used as {{variable3}} in lemlist)
+  - name: variable4
+    type: string
+    required: false
+    description: Custom variable 4 (used as {{variable4}} in lemlist)
+  - name: variable5
+    type: string
+    required: false
+    description: Custom variable 5 (used as {{variable5}} in lemlist)

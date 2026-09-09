@@ -4,10 +4,11 @@ description: >-
   detection, email verification, lead/company search, and French SIRET/SIREN data. Delivered via a Google Sheets add-on,
   a REST API, and an MCP server for AI agents.
 url: >-
-  https://raw.githubusercontent.com/api-evangelist/derrick-b2b-data-enrichment-google-sheets-claude-api-derrick/refs/heads/main/apis.yml
+  https://raw.githubusercontent.com/api-evangelist/derrick/refs/heads/main/apis.yml
 created: '2026-09-09'
 modified: '2026-09-09'
 specificationVersion: '0.21'
+image: https://derrick-app.com/og/index.png
 tags:
   - b2b-data-enrichment
   - email-finder
@@ -30,6 +31,7 @@ apis:
       Bearer API-key auth; requires Standard plan or above.
     humanURL: https://app1.derrick-app.com/api/v1/docs/
     baseURL: https://app1.derrick-app.com/api/v1/
+    image: https://derrick-app.com/og/index.png
     tags:
       - b2b-data-enrichment
       - email-finder
@@ -54,6 +56,7 @@ apis:
       (derrick-mcp). Bearer API-key auth; requires Standard plan or above.
     humanURL: https://derrick-app.com/mcp
     baseURL: https://app1.derrick-app.com/mcp
+    image: https://derrick-app.com/og/index.png
     tags:
       - b2b-data-enrichment
       - email-finder
@@ -78,9 +81,64 @@ apis:
         url: https://derrick-app.com/llms.txt
 maintainers:
   - FN: Derrick Support
-    url: mailto:contact@derrick-app.com
-generated:
+    email: contact@derrick-app.com
+    url: https://derrick-app.com
+x-enrichment:
+  date: '2026-09-09'
+  status: enriched
+  artifacts_added: 28
+  pass: local-v3
+x-generated:
   by: apis.io/add
   model: claude-opus-4-8
   confidence: 93
   at: '2026-09-09T11:29:58.771Z'
+common:
+- type: Website
+  url: https://derrick-app.com
+- type: VulnerabilityDisclosure
+  url: security/derrick-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/derrick-domain-security.yml
+- type: Security
+  url: security/derrick-vulnerability-disclosure.yml
+- type: WellKnown
+  url: well-known/derrick-well-known.yml
+- type: SecurityTxt
+  url: well-known/derrick-security.txt
+- type: MCPServer
+  url: mcp/derrick-mcp.yml
+- type: LLMsTxt
+  url: llms/derrick-llms.txt
+- type: Packages
+  url: packages/derrick-packages.yml
+- type: Plans
+  url: plans/derrick-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/derrick-rate-limits.yml
+- type: Authentication
+  url: authentication/derrick-authentication.yml
+- type: Conformance
+  url: conformance/derrick-conformance.yml
+- type: Conventions
+  url: conventions/derrick-conventions.yml
+- type: ErrorCatalog
+  url: errors/derrick-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/derrick-lifecycle.yml
+- type: ChangeLog
+  url: changelog/derrick-changelog.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Pricing
+  url: https://derrick-app.com/#pricing
+- type: Roadmap
+  url: https://derrick.productlift.dev/
+- type: PrivacyPolicy
+  url: https://derrick-app.com/privacy
+- type: Blog
+  url: https://derrick-app.com/blog
+- type: SignUp
+  url: https://derrick-app.com/get-started
+- type: GitHubOrganization
+  url: https://github.com/DerrickAppOrg

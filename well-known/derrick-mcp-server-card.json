@@ -1,0 +1,362 @@
+{
+  "schema_version": "1.0",
+  "serverInfo": {
+    "name": "Derrick",
+    "version": "1.0.0",
+    "description": "B2B data enrichment for Google Sheets - find emails, phones, LinkedIn data, company info, SIRET/SIREN, tech stacks, and more. 100+ data points per lead.",
+    "vendor": "Derrick App",
+    "homepage": "https://derrick-app.com",
+    "license": "Proprietary"
+  },
+  "transport": {
+    "type": "http",
+    "endpoint": "https://app1.derrick-app.com/mcp",
+    "protocols": [
+      "https"
+    ]
+  },
+  "authentication": {
+    "type": "apikey",
+    "location": "header",
+    "header": "Authorization",
+    "scheme": "Bearer",
+    "required_at_install": false,
+    "description": "Install the MCP without an API key - the server prompts for one on the first tool call. The API key lives in the Derrick Google Sheets add-on (Settings → API access) and requires the Standard plan (€20/mo) or above for API/MCP access.",
+    "instructions_url": "https://derrick-app.com/mcp#install"
+  },
+  "categories": [
+    "b2b-enrichment",
+    "lead-generation",
+    "email-finder",
+    "phone-finder",
+    "sales-intelligence",
+    "data-enrichment",
+    "crm-enrichment",
+    "gtm-tools"
+  ],
+  "capabilities": {
+    "tools": {
+      "derrick_find_email": {
+        "description": "Find the best professional email for a person from a LinkedIn URL, or from first name + last name + company. Returns the email + confidence score.",
+        "category": "email-finder",
+        "credit_cost": 5,
+        "example": {
+          "input": {
+            "linkedin_url": "https://linkedin.com/in/satya-nadella"
+          },
+          "output": "satya@microsoft.com (verified)"
+        }
+      },
+      "derrick_find_phone": {
+        "description": "Find mobile or office phone number from a LinkedIn URL or contact name.",
+        "category": "phone-finder",
+        "credit_cost": 150,
+        "example": {
+          "input": {
+            "linkedin_url": "https://linkedin.com/in/..."
+          },
+          "output": "+33 6 12 34 56 78"
+        }
+      },
+      "derrick_enrich_profile": {
+        "description": "Returns 30+ data points about a LinkedIn profile : job title, seniority, location, tenure, past roles, education, skills.",
+        "category": "enrichment",
+        "credit_cost": 1,
+        "example": {
+          "input": {
+            "linkedin_url": "https://linkedin.com/in/..."
+          },
+          "output": "{ name, title, company, seniority, location, ... }"
+        }
+      },
+      "derrick_enrich_companies": {
+        "description": "Returns company data from a name, domain, or LinkedIn URL : headcount, industry, funding, HQ, social profiles, founded year.",
+        "category": "enrichment",
+        "credit_cost": 1,
+        "example": {
+          "input": {
+            "domain": "stripe.com"
+          },
+          "output": "{ name, employees, industry, founded, hq, ... }"
+        }
+      },
+      "derrick_data_gouv": {
+        "description": "French legal entity data from data.gouv.fr : SIRET, SIREN, NAF code, registered address, share capital, last filing date.",
+        "category": "enrichment",
+        "credit_cost": 1,
+        "example": {
+          "input": {
+            "siren": "552120222"
+          },
+          "output": "{ siret, naf_code, address, capital, ... }"
+        }
+      },
+      "derrick_find_tech": {
+        "description": "Detect technologies a company uses on its website : CRM, analytics, hosting, frameworks, payment, ATS, marketing tools.",
+        "category": "tech-stack",
+        "credit_cost": 1,
+        "example": {
+          "input": {
+            "domain": "derrick-app.com"
+          },
+          "output": "[\"Stripe\", \"Cloudflare\", \"GTM\", \"Astro\"]"
+        }
+      },
+      "derrick_verify_email": {
+        "description": "Real-time SMTP verification : returns valid, risky, catch-all, role-based, or disposable.",
+        "category": "verification",
+        "credit_cost": 1,
+        "example": {
+          "input": {
+            "email": "john@stripe.com"
+          },
+          "output": "{ status: \"valid\", risk: \"low\" }"
+        }
+      },
+      "derrick_search_linkedin_profile": {
+        "description": "Query LinkedIn for profiles matching job title + company + location. Returns ranked profile URLs + names.",
+        "category": "search",
+        "credit_cost": 1,
+        "example": {
+          "input": {
+            "job_title": "Head of Sales",
+            "company": "Notion",
+            "location": "France"
+          },
+          "output": "[5 ranked profiles]"
+        }
+      },
+      "derrick_search_companies": {
+        "description": "Find companies matching industry, size, geography, and tech stack filters. Returns up to 100 companies.",
+        "category": "search",
+        "credit_cost": 1,
+        "example": {
+          "input": {
+            "industry": "SaaS",
+            "employees": "50-200",
+            "country": "FR"
+          },
+          "output": "[N matched companies]"
+        }
+      },
+      "derrick_search_leads_in_companies": {
+        "description": "Within a target company, return leads matching a job-title pattern (e.g. all Heads of Growth).",
+        "category": "search",
+        "credit_cost": 2,
+        "example": {
+          "input": {
+            "company_domain": "stripe.com",
+            "job_title_pattern": "Head of Growth"
+          },
+          "output": "[leads with profiles]"
+        }
+      },
+      "derrick_website_contact_social": {
+        "description": "Scrape a company website for emails, phones, and social profiles in the footer / contact page.",
+        "category": "enrichment",
+        "credit_cost": 2,
+        "example": {
+          "input": {
+            "url": "https://stripe.com"
+          },
+          "output": "{ emails: [], phones: [], social: { linkedin: ... } }"
+        }
+      },
+      "derrick_serp_first_result": {
+        "description": "Google's #1 result for any query. Useful for verifying a company's official URL, news, or fact-checking.",
+        "category": "search",
+        "credit_cost": 1,
+        "example": {
+          "input": {
+            "query": "Stripe CEO 2026"
+          },
+          "output": "{ url, title, snippet }"
+        }
+      }
+    }
+  },
+  "pricing": {
+    "currency": "EUR",
+    "cost_model": "Credit cost varies by endpoint - see each tool's credit_cost field. Typical examples : find_email = 5 credits, find_phone = 150 credits, enrich_profile = 1 credit, verify_email = 1 credit, search_companies = 1 credit per result.",
+    "free_tier": {
+      "credits_per_month": 100,
+      "price": 0,
+      "api_access": false
+    },
+    "paid_tiers": [
+      {
+        "name": "Mini",
+        "price_monthly": 9,
+        "credits_per_month": 4000,
+        "cost_per_credit": 0.00225,
+        "api_access": false
+      },
+      {
+        "name": "Standard",
+        "price_monthly": 20,
+        "credits_per_month": 10000,
+        "cost_per_credit": 0.002,
+        "api_access": true
+      },
+      {
+        "name": "Plus",
+        "price_monthly": 47.5,
+        "credits_per_month": 25000,
+        "cost_per_credit": 0.0019,
+        "api_access": true
+      },
+      {
+        "name": "Pro",
+        "price_monthly": 175,
+        "credits_per_month": 100000,
+        "cost_per_credit": 0.00175,
+        "api_access": true
+      },
+      {
+        "name": "Scale",
+        "price_monthly": 320,
+        "credits_per_month": 200000,
+        "cost_per_credit": 0.0016,
+        "api_access": true
+      }
+    ],
+    "notes": "Unused credits roll over on all paid plans. API/MCP access is unlocked starting on the Standard plan (€20/mo) - Free and Mini tiers do not expose API keys."
+  },
+  "rate_limits": {
+    "all_paid_plans": {
+      "requests_per_minute": 60
+    },
+    "backoff": "Exponential with jitter on 429. Recommended initial delay : 2 s, max delay : 60 s."
+  },
+  "installation": {
+    "note": "The MCP installs without an API key - the server requests one at first tool call. To skip that prompt, set DERRICK_API_KEY in your client's env or via --env on install.",
+    "claude-code": {
+      "command": "claude mcp add derrick -- npx -y derrick-mcp",
+      "command_with_key": "claude mcp add derrick --env DERRICK_API_KEY=$YOUR_KEY -- npx -y derrick-mcp",
+      "docs": "https://derrick-app.com/mcp#install"
+    },
+    "claude-desktop": {
+      "config_path_macos": "~/Library/Application Support/Claude/claude_desktop_config.json",
+      "config_path_windows": "%APPDATA%\\Claude\\claude_desktop_config.json",
+      "snippet": {
+        "mcpServers": {
+          "derrick": {
+            "command": "npx",
+            "args": [
+              "-y",
+              "derrick-mcp"
+            ]
+          }
+        }
+      },
+      "snippet_with_key": {
+        "mcpServers": {
+          "derrick": {
+            "command": "npx",
+            "args": [
+              "-y",
+              "derrick-mcp"
+            ],
+            "env": {
+              "DERRICK_API_KEY": "<your-key>"
+            }
+          }
+        }
+      }
+    },
+    "claude-web": {
+      "url": "https://app1.derrick-app.com/mcp",
+      "ui_path": "Settings → Customize → Connectors → Add MCP server",
+      "auth": "The server prompts for the API key on first call ; or set Authorization: Bearer <your-key> in the connector config."
+    },
+    "cursor": {
+      "config_path": "~/.cursor/mcp.json",
+      "snippet": {
+        "mcpServers": {
+          "derrick": {
+            "command": "npx",
+            "args": [
+              "-y",
+              "derrick-mcp"
+            ]
+          }
+        }
+      }
+    },
+    "windsurf": {
+      "config_path": "~/.codeium/windsurf/mcp_config.json",
+      "snippet": {
+        "mcpServers": {
+          "derrick": {
+            "command": "npx",
+            "args": [
+              "-y",
+              "derrick-mcp"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "featured_examples": [
+    {
+      "title": "Build a target-account list",
+      "prompt": "Find 50 Series-A SaaS companies in France with 50-200 employees that use HubSpot. For each, return name, domain, HQ city, and the LinkedIn URL of the Head of Sales.",
+      "tools_used": [
+        "derrick_search_companies",
+        "derrick_enrich_companies",
+        "derrick_search_leads_in_companies"
+      ]
+    },
+    {
+      "title": "Enrich a CSV of leads",
+      "prompt": "I'll paste 30 LinkedIn URLs. Return each person's email, phone, current company, job title.",
+      "tools_used": [
+        "derrick_enrich_profile",
+        "derrick_find_email",
+        "derrick_find_phone"
+      ]
+    },
+    {
+      "title": "Verify a batch of emails",
+      "prompt": "Verify these 100 emails. Group by status. For risky ones, explain why.",
+      "tools_used": [
+        "derrick_verify_email"
+      ]
+    },
+    {
+      "title": "Track tech stack changes",
+      "prompt": "List tech used by competitor.com today and diff vs my notes from 3 months ago.",
+      "tools_used": [
+        "derrick_find_tech"
+      ]
+    }
+  ],
+  "health": {
+    "endpoint": "https://app1.derrick-app.com/mcp/health",
+    "method": "GET",
+    "expected_status": 200
+  },
+  "support": {
+    "email": "contact@derrick-app.com",
+    "homepage": "https://derrick-app.com",
+    "docs": "https://app1.derrick-app.com/api/v1/docs/",
+    "status_page": "https://derrick-app.com"
+  },
+  "privacy": {
+    "data_residency": "EU",
+    "gdpr_compliant": true,
+    "stores_user_data": false,
+    "dpa_url": "https://derrick-app.com/data-processing-agreement",
+    "privacy_policy_url": "https://derrick-app.com/privacy"
+  },
+  "links": {
+    "homepage": "https://derrick-app.com",
+    "landing": "https://derrick-app.com/mcp",
+    "documentation": "https://app1.derrick-app.com/api/v1/docs/",
+    "npm-package": "https://www.npmjs.com/package/derrick-mcp",
+    "repository": "https://www.npmjs.com/package/derrick-mcp",
+    "llms_txt": "https://derrick-app.com/llms.txt",
+    "llms_full_txt": "https://derrick-app.com/llms-full.txt"
+  }
+}

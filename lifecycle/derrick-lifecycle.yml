@@ -1,0 +1,25 @@
+generated: '2026-09-09'
+method: searched
+source: https://derrick.productlift.dev/ + npm derrick-mcp registry metadata + llms-full.txt + MCP server card
+note: >-
+  Derrick publishes a public roadmap (ProductLift) but no versioning policy, deprecation policy,
+  SLA, or status page. The server card's status_page field points at the marketing homepage, not a
+  status service - not credited as a StatusPage. API version is v1 (URL path); the MCP surface is
+  described as beta in the provider's own tool help text.
+versioning:
+  scheme: url-path
+  current: v1
+  policy: not published
+deprecation:
+  policy: not published
+  sunset_headers: not documented
+  deprecated_operations: []
+status_page: none
+sla: not published
+roadmap: https://derrick.productlift.dev/
+release_cadence:
+  evidence: npm derrick-mcp releases 0.1.0 (2026-04-02), 0.2.0 (2026-05-04), 0.3.0 (2026-06-22)
+  note: MCP tools are registered dynamically from the live actions catalog, so new API actions ship without a package release.
+maturity:
+  mcp: beta (provider's own derrick_help text calls the MCP beta and points bulk use at the Google Sheets add-on)
+  rest_api: production (gated to paid plans)

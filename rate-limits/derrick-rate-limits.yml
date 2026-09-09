@@ -1,0 +1,19 @@
+generated: '2026-09-09'
+method: searched
+source: https://derrick-app.com/.well-known/mcp/server-card.json
+note: >-
+  Published in the machine-readable MCP server card (rate_limits block) and echoed by the
+  derrick-mcp package's error guidance (429 RATE LIMIT, "60 req/min exceeded", not charged).
+  No rate-limit response headers (X-RateLimit-*, RateLimit-*, Retry-After) are documented;
+  the runtime signal is the 429 status code alone.
+limit_count: 1
+limits:
+  - scope: per-key (all paid plans)
+    window: 1 minute
+    limit: 60
+    burst: null
+    applies_to: REST API and MCP server
+    exhaustion_status: 429
+    charged_on_429: false
+    response_headers: []
+    guidance: 'Provider-recommended backoff: exponential with jitter on 429, initial delay 2s, max delay 60s.'

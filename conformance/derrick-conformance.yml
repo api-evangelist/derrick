@@ -1,0 +1,53 @@
+generated: '2026-09-09'
+method: probed
+source: live probes of derrick-app.com and app1.derrick-app.com well-known surfaces, 2026-09-09
+note: >-
+  Every entry below is evidenced by a document actually fetched during this pass (statuses recorded
+  in well-known/derrick-well-known.yml). Derrick's market (B2B contact/company enrichment) has no
+  domain data standard to conform to; no conformance is asserted where none exists. Errors are a
+  proprietary JSON envelope, not RFC 9457 - recorded as conforms: false.
+conformance:
+  - id: rfc9116-security-txt
+    name: security.txt (RFC 9116)
+    conforms: true
+    evidence: https://derrick-app.com/.well-known/security.txt (HTTP 200; Contact, Expires, Canonical, Policy, Preferred-Languages)
+  - id: rfc9727-api-catalog
+    name: api-catalog linkset (RFC 9727)
+    conforms: true
+    evidence: https://derrick-app.com/.well-known/api-catalog (HTTP 200, application/linkset+json; anchors the REST API and the MCP server)
+  - id: rfc8414-oauth-authorization-server-metadata
+    name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+    conforms: true
+    evidence: https://app1.derrick-app.com/.well-known/oauth-authorization-server (HTTP 200; PKCE S256, dynamic client registration)
+  - id: rfc9728-oauth-protected-resource-metadata
+    name: OAuth 2.0 Protected Resource Metadata (RFC 9728)
+    conforms: true
+    evidence: >-
+      https://app1.derrick-app.com/.well-known/oauth-protected-resource/mcp (HTTP 200), advertised in the
+      WWW-Authenticate challenge returned by an anonymous POST to https://app1.derrick-app.com/mcp
+  - id: mcp-streamable-http
+    name: Model Context Protocol (streamable HTTP transport)
+    conforms: true
+    evidence: >-
+      https://app1.derrick-app.com/mcp answers with MCP CORS surface (Mcp-Session-Id,
+      MCP-Protocol-Version headers exposed) and OAuth challenge (probed 2026-09-09); server card at
+      https://derrick-app.com/.well-known/mcp/server-card.json; npm derrick-mcp built on
+      @modelcontextprotocol/sdk ^1.29.0
+  - id: llms-txt
+    name: llms.txt (llmstxt.org)
+    conforms: true
+    evidence: https://derrick-app.com/llms.txt and /llms-full.txt (HTTP 200; saved to llms/)
+  - id: gdpr
+    name: GDPR posture (self-declared)
+    conforms: true
+    evidence: >-
+      MCP server card privacy block: data_residency EU, gdpr_compliant true, DPA at
+      https://derrick-app.com/data-processing-agreement (HTTP 200) and privacy policy at
+      https://derrick-app.com/privacy (HTTP 200). Self-declared; no third-party certification
+      (no SOC 2 / ISO 27001 trust center found).
+  - id: rfc9457-problem-details
+    name: Problem Details for HTTP APIs (RFC 9457)
+    conforms: false
+    evidence: >-
+      Errors are a proprietary envelope {"success":false,"error":"...","errorType":"AUTH"}
+      (observed live on 401, 2026-09-09), not application/problem+json.

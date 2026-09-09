@@ -1,0 +1,53 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  npm derrick-mcp@0.3.0 (dist/api.js, dist/tools.js) + https://app1.derrick-app.com/api/v1/docs/actions
+  + MCP server card + pricing.md; cross-checked against live probes 2026-09-09
+note: >-
+  Derrick publishes no OpenAPI; these cross-cutting semantics are read from its own npm client
+  code, its unauthenticated actions catalog, and its machine-readable server card. The API surface
+  is uniform: every action is POST https://app1.derrick-app.com/api/v1/{apiSlug} with a JSON body
+  {"data": {<inputs>}}, X-API-Key auth, and the {success, error, errorType} envelope.
+auth:
+  style: api-key header (X-API-Key) on REST; Bearer API key or OAuth 2.0 PKCE on the MCP endpoint
+  reference: authentication/derrick-authentication.yml
+request_shape:
+  pattern: 'POST /api/v1/{apiSlug} with body {"data": {<string inputs>}}'
+  client_header: 'X-Derrick-Client: mcp is sent by the MCP package so the backend can distinguish MCP usage from raw API calls'
+pagination:
+  style: page parameter on import/search actions
+  params: [page, offset]
+  note: import_* and search actions take an optional page (find_staff_members uses offset); no cursor or Link-header pagination is documented.
+error_envelope:
+  shape: '{"success": false, "error": "<message>", "errorType": "<CODE>"}'
+  reference: errors/derrick-problem-types.yml
+rate_limit_signaling:
+  status: 429
+  headers: []
+  note: 60 requests/minute on all paid plans; no rate-limit response headers documented. See rate-limits/derrick-rate-limits.yml.
+versioning:
+  style: URL path version (/api/v1/)
+  note: Single documented version; no deprecation or sunset policy published.
+timeouts:
+  client: derrick-mcp sets a 300s HTTP timeout; slow tools (find_email, find_phone) emit MCP keepalive notifications every 25s to survive the host's 55s idle timer.
+idempotency:
+  coverage: none
+  note: >-
+    No Idempotency-Key header or replay-protection mechanism is documented anywhere in the
+    actions catalog, server card, or client code. The surface is lookup/enrichment-shaped
+    (no resource-mutating writes), but repeated identical calls to per-call-billed endpoints
+    each consume credits - there is no dedupe window.
+dry_run_mode:
+  supported: na
+  note: No test/sandbox mode published; every successful or per-call request spends real credits.
+reversibility:
+  status: na
+  note: >-
+    The API has no resource write surface to reverse - every action is a read/lookup returning
+    data. The one economic side effect, credit consumption, has no documented reversal or refund
+    operation (billing docs state per-call endpoints charge even on empty results). derrick_upgrade
+    initiates a Stripe Checkout session but subscription management/cancellation happens in
+    Stripe/the add-on, outside this API.
+request_id_tracing: not documented
+field_expansion: not documented
+metadata_conventions: not documented

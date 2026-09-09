@@ -1,0 +1,28 @@
+generated: '2026-09-09'
+method: searched
+source: https://registry.npmjs.org/derrick-mcp + https://github.com/DerrickAppOrg
+note: >-
+  Derrick ships one first-party package on a public registry: the derrick-mcp MCP server for npm
+  (stdio transport; the hosted MCP at app1.derrick-app.com/mcp runs the same dynamically-registered
+  tool set). No REST-API client SDKs are published on npm, PyPI, RubyGems, Packagist, NuGet,
+  Maven or crates.io - the docs point script users at raw HTTP calls. The Google Sheets add-on and
+  the Derrick Chrome extension (required for the LinkedIn endpoints) are distributed through the
+  Google Workspace Marketplace / Chrome Web Store, not a package registry; no public listing URL is
+  linked from the site's crawlable pages. GitHub org DerrickAppOrg also publishes
+  derrick-outbound-plugin (public repo).
+packages:
+  - name: derrick-mcp
+    registry: npm
+    url: https://www.npmjs.com/package/derrick-mcp
+    repository: https://github.com/DerrickAppOrg/derrick-mcp
+    language: TypeScript
+    type: mcp-server
+    official: true
+    version: 0.3.0
+    published: '2026-06-22'
+    license: MIT
+    note: >-
+      Read from registry.npmjs.org metadata 2026-09-09. First published 2026-04-02 (0.1.0);
+      0.2.0 on 2026-05-04; 0.3.0 on 2026-06-22. Depends on @modelcontextprotocol/sdk ^1.29.0
+      and zod ^4.3.6; Node >= 22. Registers 5 static tools plus dynamic tools fetched at
+      startup from https://app1.derrick-app.com/api/v1/docs/actions.

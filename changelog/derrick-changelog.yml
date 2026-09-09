@@ -1,0 +1,37 @@
+generated: '2026-09-09'
+method: searched
+source: npm derrick-mcp@0.3.0 CHANGELOG.md + registry.npmjs.org/derrick-mcp time metadata
+note: >-
+  Derrick publishes no dated changelog for the REST API itself; the only dated, versioned change
+  history the provider ships is the derrick-mcp package changelog (recorded here verbatim, dates
+  from the npm registry). Product-level changes surface on the public roadmap
+  (https://derrick.productlift.dev/) without a dated archive.
+scheme: semver (derrick-mcp npm package)
+current_version: 0.3.0
+entries:
+  - version: 0.3.0
+    date: '2026-06-22'
+    breaking: false
+    highlights:
+      - 'Send an X-Derrick-Client: mcp header on every API call so the backend can distinguish MCP usage from raw public-API calls.'
+  - version: 0.2.1
+    date: null
+    breaking: false
+    highlights:
+      - Clean dist/ before each build to avoid shipping stale artifacts.
+      - Add CHANGELOG.md to the published tarball.
+    note: Listed in CHANGELOG.md but never published to npm (registry has 0.1.0, 0.2.0, 0.3.0).
+  - version: 0.2.0
+    date: '2026-05-04'
+    breaking: false
+    highlights:
+      - Add title to every registered tool.
+      - Add tool annotations (readOnlyHint, destructiveHint, openWorldHint).
+      - 'Tool failures now return isError: true per the MCP spec.'
+      - Bump @modelcontextprotocol/sdk to ^1.29.0.
+      - Heartbeat notifications during long-running tool calls (find_email, find_phone).
+  - version: 0.1.0
+    date: '2026-04-02'
+    breaking: false
+    highlights:
+      - 'Initial release: dynamic tool registration from the Derrick API; static tools derrick_configure, derrick_account, derrick_credits, derrick_help, derrick_upgrade.'
