@@ -11,23 +11,29 @@ deployment:
   package: https://www.npmjs.com/package/derrick-mcp
   auth: oauth
   verified: probed
+  probe_prior: (never probed)
+  probe: gated
+  probe_why: RFC 9728 challenge on the MCP path only
+  checked: '2026-09-11'
+  source: claimed-backlog re-probe 2026-09-11
 transport:
   remote: streamable-http
   local: stdio
 authentication:
-  note: 'Remote endpoint answers anonymous POSTs with 401 Bearer invalid_token and RFC 9728 resource_metadata (probed
-    2026-09-09). OAuth 2.0 authorization-code + PKCE with dynamic client registration per RFC 8414 metadata on app1.derrick-app.com;
-    a Derrick API key sent as Authorization: Bearer also works per the server card. The stdio package reads DERRICK_API_KEY
-    or ~/.derrick-mcp/.env. API keys require the Standard plan or above per the server card and llms.txt (pricing.md
-    says Plus and above - see plans artifact).'
+  note: 'Remote endpoint answers anonymous POSTs with 401 Bearer invalid_token and RFC 9728 resource_metadata
+    (probed 2026-09-09). OAuth 2.0 authorization-code + PKCE with dynamic client registration per RFC
+    8414 metadata on app1.derrick-app.com; a Derrick API key sent as Authorization: Bearer also works
+    per the server card. The stdio package reads DERRICK_API_KEY or ~/.derrick-mcp/.env. API keys require
+    the Standard plan or above per the server card and llms.txt (pricing.md says Plus and above - see
+    plans artifact).'
   oauth_authorization_server: https://app1.derrick-app.com/.well-known/oauth-authorization-server
   oauth_protected_resource: https://app1.derrick-app.com/.well-known/oauth-protected-resource/mcp
 server_card: https://derrick-app.com/.well-known/mcp/server-card.json
 actions_catalog:
   url: https://app1.derrick-app.com/api/v1/docs/actions
-  note: Unauthenticated machine-readable catalog the MCP server itself uses to register dynamic tools at startup;
-    saved verbatim to mcp/derrick-actions-catalog.json. Each action maps 1:1 to POST /api/v1/{apiSlug} on the REST
-    API (X-API-Key auth).
+  note: Unauthenticated machine-readable catalog the MCP server itself uses to register dynamic tools
+    at startup; saved verbatim to mcp/derrick-actions-catalog.json. Each action maps 1:1 to POST /api/v1/{apiSlug}
+    on the REST API (X-API-Key auth).
   file: derrick-actions-catalog.json
   mcp_version:
     min: 0.3.0
@@ -71,8 +77,8 @@ static_tools:
 tools:
 - name: derrick_google_maps_by_prompt
   title: Google Maps by prompt
-  description: 'Type what you are looking for and where (e.g. "growth agency in London") and import up to 200 businesses
-    into a new sheet: name, category, rating, reviews, phone, website, address and attributes.'
+  description: 'Type what you are looking for and where (e.g. "growth agency in London") and import up
+    to 200 businesses into a new sheet: name, category, rating, reviews, phone, website, address and attributes.'
   category: AI
   credits_per_run: 1
   rest_endpoint: POST https://app1.derrick-app.com/api/v1/google_maps_by_prompt
@@ -80,12 +86,12 @@ tools:
   - name: prompt
     type: string
     required: true
-    description: Type what you are looking for and where, e.g. "agence seo marseille" or "growth agency in London".
-      Always include a location.
+    description: Type what you are looking for and where, e.g. "agence seo marseille" or "growth agency
+      in London". Always include a location.
 - name: derrick_import_leads_from_prompt
   title: Import leads from prompt
-  description: Describe your ideal lead in plain language and import the matching Sales Navigator profiles into
-    a new sheet.
+  description: Describe your ideal lead in plain language and import the matching Sales Navigator profiles
+    into a new sheet.
   category: AI
   credits_per_run: 1
   rest_endpoint: POST https://app1.derrick-app.com/api/v1/import_leads_from_prompt
@@ -133,9 +139,9 @@ tools:
     description: Email address to verify
 - name: derrick_is_hiring
   title: Check if a Company is Hiring
-  description: For each LinkedIn company URL, check whether the company currently has open roles on LinkedIn Jobs,
-    and get the first matching job titles. Narrow it down by country, posting date or keywords. No LinkedIn account
-    needed.
+  description: For each LinkedIn company URL, check whether the company currently has open roles on LinkedIn
+    Jobs, and get the first matching job titles. Narrow it down by country, posting date or keywords.
+    No LinkedIn account needed.
   category: company::enrich
   credits_per_run: 1
   rest_endpoint: POST https://app1.derrick-app.com/api/v1/is_hiring
@@ -444,9 +450,9 @@ tools:
     description: Keywords
 - name: derrick_data_gouv
   title: Enrich company by SIRET, SIREN or name
-  description: Enrich a French company from its SIRET, SIREN, or just its name. Numbers resolve exactly; a name
-    is matched to the best company with a confidence score and the matched name, so you can trust or filter the
-    result. Add a departement to disambiguate.
+  description: Enrich a French company from its SIRET, SIREN, or just its name. Numbers resolve exactly;
+    a name is matched to the best company with a confidence score and the matched name, so you can trust
+    or filter the result. Add a departement to disambiguate.
   category: enrich::company
   credits_per_run: 1
   rest_endpoint: POST https://app1.derrick-app.com/api/v1/data_gouv
@@ -585,8 +591,8 @@ tools:
     description: Choose Website URL
 - name: derrick_website_crawler
   title: Enrich Website with Page Content
-  description: 'Extract essential web page content: title, meta description, headings (H1-H5), page text (limited
-    to 50,000 characters), and total character count.'
+  description: 'Extract essential web page content: title, meta description, headings (H1-H5), page text
+    (limited to 50,000 characters), and total character count.'
   category: enrich::Company
   credits_per_run: 2
   rest_endpoint: POST https://app1.derrick-app.com/api/v1/website_crawler
@@ -597,8 +603,8 @@ tools:
     description: Choose URL column
 - name: derrick_google_news
   title: Google News results
-  description: 'For each company in your sheet, return its most relevant recent Google News article: title, link,
-    publisher and date.'
+  description: 'For each company in your sheet, return its most relevant recent Google News article: title,
+    link, publisher and date.'
   category: enrich::google
   credits_per_run: 1
   rest_endpoint: POST https://app1.derrick-app.com/api/v1/google_news
@@ -737,7 +743,8 @@ tools:
   - name: page
     type: string
     required: false
-    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the URL's page.
+    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the
+      URL's page.
 - name: derrick_import_companies_from_prompt
   title: Import Companies by prompt
   description: Find companies that semantically match a prompt, optionally filtered by country.
@@ -767,11 +774,12 @@ tools:
   - name: page
     type: string
     required: false
-    description: Result page to fetch (API only, 0-indexed). Each page returns up to 20 companies. Defaults to 0.
+    description: Result page to fetch (API only, 0-indexed). Each page returns up to 20 companies. Defaults
+      to 0.
 - name: derrick_companies_by_naf
   title: Import companies by NAF code
-  description: For each NAF activity code, import the matching French companies from the public SIRENE registry.
-    Add an optional departement to narrow the search. MAX 10k result / search.
+  description: For each NAF activity code, import the matching French companies from the public SIRENE
+    registry. Add an optional departement to narrow the search. MAX 10k result / search.
   category: import::company
   credits_per_run: 1
   rest_endpoint: POST https://app1.derrick-app.com/api/v1/companies_by_naf
@@ -1066,7 +1074,8 @@ tools:
   - name: page
     type: string
     required: false
-    description: Result page to fetch (API only, 0-indexed). Each page returns up to 20 companies. Defaults to 0.
+    description: Result page to fetch (API only, 0-indexed). Each page returns up to 20 companies. Defaults
+      to 0.
 - name: derrick_import_profile_basic
   title: Import Leads from LinkedIn
   description: Import leads from a LinkedIn people search URL
@@ -1081,7 +1090,8 @@ tools:
   - name: page
     type: string
     required: false
-    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the URL's page.
+    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the
+      URL's page.
 - name: derrick_import_salesnav_companies
   title: Import Companies from Sales Navigator
   description: Import companies from a LinkedIn Sales Navigator company URL
@@ -1096,11 +1106,12 @@ tools:
   - name: page
     type: string
     required: false
-    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the URL's page.
+    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the
+      URL's page.
 - name: derrick_find_staff_members
   title: Import a company's people (current & former)
-  description: 'Lists people who work or worked at a company: name, role, location and LinkedIn profile. Optionally
-    filter by job function. No Sales Navigator needed.'
+  description: 'Lists people who work or worked at a company: name, role, location and LinkedIn profile.
+    Optionally filter by job function. No Sales Navigator needed.'
   category: import::linkedin::company
   credits_per_run: 1
   rest_endpoint: POST https://app1.derrick-app.com/api/v1/find_staff_members
@@ -1158,11 +1169,12 @@ tools:
   - name: page
     type: string
     required: false
-    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the URL's page.
+    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the
+      URL's page.
 - name: derrick_import_post_engagers
   title: Import LinkedIn post likes & comments
-  description: List people who reacted to or commented on a LinkedIn post (name + profile URL + reaction type),
-    from the post URL.
+  description: List people who reacted to or commented on a LinkedIn post (name + profile URL + reaction
+    type), from the post URL.
   category: import::linkedin::post
   credits_per_run: 1
   rest_endpoint: POST https://app1.derrick-app.com/api/v1/import_post_engagers
@@ -1195,11 +1207,12 @@ tools:
   - name: page
     type: string
     required: false
-    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the URL's page.
+    description: Result page to start from (API only). Overrides the page in the URL. Defaults to the
+      URL's page.
 - name: derrick_push_to_lgm
   title: Push lead to La Growth Machine
-  description: Push leads from Google Sheets into a La Growth Machine audience - LinkedIn URL plus any fields you
-    map (name, email, phone, company, custom attributes). Connect once, no CSV export.
+  description: Push leads from Google Sheets into a La Growth Machine audience - LinkedIn URL plus any
+    fields you map (name, email, phone, company, custom attributes). Connect once, no CSV export.
   category: push::La Growth Machine
   credits_per_run: 0
   rest_endpoint: POST https://app1.derrick-app.com/api/v1/push_to_lgm
@@ -1322,8 +1335,8 @@ tools:
     description: Custom Attribute 10
 - name: derrick_push_to_lemlist
   title: Push to lemlist
-  description: Add a lead to a lemlist campaign. Connect lemlist once, pick the campaign, map the email column (the
-    lead key), and optionally map lemlist lead fields and custom variables.
+  description: Add a lead to a lemlist campaign. Connect lemlist once, pick the campaign, map the email
+    column (the lead key), and optionally map lemlist lead fields and custom variables.
   category: push::lemlist
   credits_per_run: 0
   rest_endpoint: POST https://app1.derrick-app.com/api/v1/push_to_lemlist
