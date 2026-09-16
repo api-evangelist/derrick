@@ -11,6 +11,21 @@ specificationVersion: '0.21'
 image: https://derrick-app.com/og/index.png
 tags:
   - b2b-data-enrichment
+  - Email Finder
+  - Phone Finder
+  - company-firmographics
+  - Lead Generation
+  - Sales Intelligence
+  - CRM Enrichment
+  - tech-stack-detection
+  - Email Verification
+  - siret-siren-france
+  - MCP Server
+  - llms-txt
+  - Google Sheets
+  - gtm-tools
+tags_raw:
+  - b2b-data-enrichment
   - email-finder
   - phone-finder
   - company-firmographics
@@ -33,6 +48,21 @@ apis:
     baseURL: https://app1.derrick-app.com/api/v1/
     image: https://derrick-app.com/og/index.png
     tags:
+      - b2b-data-enrichment
+      - Email Finder
+      - Phone Finder
+      - company-firmographics
+      - Lead Generation
+      - Sales Intelligence
+      - CRM Enrichment
+      - tech-stack-detection
+      - Email Verification
+      - siret-siren-france
+      - MCP Server
+      - llms-txt
+      - Google Sheets
+      - gtm-tools
+    tags_raw:
       - b2b-data-enrichment
       - email-finder
       - phone-finder
@@ -58,6 +88,21 @@ apis:
     baseURL: https://app1.derrick-app.com/mcp
     image: https://derrick-app.com/og/index.png
     tags:
+      - b2b-data-enrichment
+      - Email Finder
+      - Phone Finder
+      - company-firmographics
+      - Lead Generation
+      - Sales Intelligence
+      - CRM Enrichment
+      - tech-stack-detection
+      - Email Verification
+      - siret-siren-france
+      - MCP Server
+      - llms-txt
+      - Google Sheets
+      - gtm-tools
+    tags_raw:
       - b2b-data-enrichment
       - email-finder
       - phone-finder

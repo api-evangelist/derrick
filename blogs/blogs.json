@@ -1,0 +1,14 @@
+{
+  "repo": "derrick",
+  "feeds": [
+    {
+      "source": "https://derrick-app.com/privacy",
+      "feed_url": "https://derrick-app.com/privacy",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-09-13T13:00:00Z"
+}
