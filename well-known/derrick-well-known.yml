@@ -1,91 +1,115 @@
-generated: '2026-09-09'
+generated: '2026-09-19'
 method: probed
 source: live probes of /.well-known/* on derrick-app.com, www.derrick-app.com, app1.derrick-app.com, app.derrick-app.com
-note: >-
-  Derrick publishes an unusually rich discovery surface on its registrable domain: RFC 9116 security.txt,
-  an RFC 9727 api-catalog (application/linkset+json) linking the REST API and MCP server, a legacy
-  ai-plugin.json manifest, and an MCP server-card at /.well-known/mcp/server-card.json. The API host
-  app1.derrick-app.com serves RFC 8414 OAuth authorization-server metadata (with dynamic client
-  registration) and RFC 9728 protected-resource metadata for the MCP endpoint. www.derrick-app.com
-  301-redirects most well-known paths to the apex but itself serves an orphaned easy-mcp-ai
-  (WordPress-plugin-shaped) openid-configuration/oauth-authorization-server pair whose /wp-json
-  endpoints 404 on the apex - recorded verbatim, flagged stale. app.derrick-app.com serves none.
+note: 'Derrick publishes an unusually rich discovery surface on its registrable domain: RFC 9116 security.txt,
+  an RFC 9727 api-catalog (application/linkset+json) linking the REST API and MCP server, a legacy ai-plugin.json
+  manifest, and an MCP server-card at /.well-known/mcp/server-card.json. The API host app1.derrick-app.com
+  serves RFC 8414 OAuth authorization-server metadata (with dynamic client registration) and RFC 9728
+  protected-resource metadata for the MCP endpoint. www.derrick-app.com 301-redirects most well-known
+  paths to the apex but itself serves an orphaned easy-mcp-ai (WordPress-plugin-shaped) openid-configuration/oauth-authorization-server
+  pair whose /wp-json endpoints 404 on the apex - recorded verbatim, flagged stale. app.derrick-app.com
+  serves none.
+
+
+  MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s primary
+  hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed and
+  were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
 hosts:
-  - host: derrick-app.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 200
-        file: derrick-security.txt
-      - path: /.well-known/api-catalog
-        status: 200
-        content_type: application/linkset+json
-        file: derrick-api-catalog.json
-      - path: /.well-known/ai-plugin.json
-        status: 200
-        file: derrick-ai-plugin.json
-      - path: /.well-known/mcp/server-card.json
-        status: 200
-        file: derrick-mcp-server-card.json
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/oauth-authorization-server
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
-  - host: www.derrick-app.com
-    documents:
-      - path: /.well-known/openid-configuration
-        status: 200
-        file: derrick-www-openid-configuration.json
-        note: easy-mcp-ai (WordPress plugin) issuer document; its /wp-json/easy-mcp-ai endpoints return 404 on the apex - appears orphaned/stale
-      - path: /.well-known/oauth-authorization-server
-        status: 200
-        file: derrick-www-oauth-authorization-server.json
-        note: same orphaned easy-mcp-ai document as openid-configuration
-      - path: /.well-known/security.txt
-        status: 301
-        note: redirects to https://derrick-app.com
-      - path: /.well-known/api-catalog
-        status: 301
-      - path: /.well-known/ai-plugin.json
-        status: 301
-  - host: app1.derrick-app.com
-    documents:
-      - path: /.well-known/oauth-authorization-server
-        status: 200
-        file: derrick-app1-oauth-authorization-server.json
-        note: RFC 8414 metadata - authorization-code + refresh_token grants, PKCE S256, dynamic client registration at /register
-      - path: /.well-known/oauth-protected-resource/mcp
-        status: 200
-        file: derrick-app1-oauth-protected-resource-mcp.json
-        note: RFC 9728 protected-resource metadata advertised by the MCP endpoint's WWW-Authenticate challenge
-      - path: /.well-known/security.txt
-        status: 404
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
-  - host: app.derrick-app.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 404
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/oauth-authorization-server
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
+- host: derrick-app.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: derrick-security.txt
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: application/linkset+json
+    file: derrick-api-catalog.json
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    file: derrick-ai-plugin.json
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: derrick-mcp-server-card.json
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: www.derrick-app.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: derrick-www-openid-configuration.json
+    note: easy-mcp-ai (WordPress plugin) issuer document; its /wp-json/easy-mcp-ai endpoints return 404
+      on the apex - appears orphaned/stale
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: derrick-www-oauth-authorization-server.json
+    note: same orphaned easy-mcp-ai document as openid-configuration
+  - path: /.well-known/security.txt
+    status: 301
+    note: redirects to https://derrick-app.com
+  - path: /.well-known/api-catalog
+    status: 301
+  - path: /.well-known/ai-plugin.json
+    status: 301
+- host: app1.derrick-app.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: derrick-app1-oauth-authorization-server.json
+    note: RFC 8414 metadata - authorization-code + refresh_token grants, PKCE S256, dynamic client registration
+      at /register
+  - path: /.well-known/oauth-protected-resource/mcp
+    status: 200
+    file: derrick-app1-oauth-protected-resource-mcp.json
+    note: RFC 9728 protected-resource metadata advertised by the MCP endpoint's WWW-Authenticate challenge
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: derrick-app1-oauth-protected-resource.json
+    bytes: 157
+  path_echo_control: passed
+- host: app.derrick-app.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://app1.derrick-app.com
+    path: /.well-known/oauth-protected-resource
+    file: derrick-app1-oauth-protected-resource.json
+  - host: https://app1.derrick-app.com
+    path: /.well-known/oauth-authorization-server
+    file: derrick-app1-oauth-authorization-server.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
