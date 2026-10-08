@@ -61,3 +61,47 @@ metered_actions:
   - { action: Ask OpenAI, credits: 1 }
   - { action: Ask Claude, credits: 2 }
   - { action: data cleaning (duplicates, gender, names/domains from email) and outbound pushes, credits: 0 }
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: FREE
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: MINI
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: STANDARD
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: PLUS
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: PRO
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: SCALE
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
