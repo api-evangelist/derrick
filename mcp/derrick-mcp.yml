@@ -1409,3 +1409,15 @@ tools:
     type: string
     required: false
     description: Custom variable 5 (used as {{variable5}} in lemlist)
+rfc9728:
+  endpoint: https://app1.derrick-app.com/mcp
+  metadata_url: https://app1.derrick-app.com/.well-known/oauth-protected-resource/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://app1.derrick-app.com/mcp
+    authorization_servers:
+    - https://app1.derrick-app.com/
+    resource_documentation: https://derrick-app.com/
