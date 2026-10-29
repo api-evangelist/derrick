@@ -1,4 +1,4 @@
-# Derrick (derrick)
+# Derrick
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,26 +66,107 @@
 
 B2B data-enrichment engine providing professional emails, phone numbers, LinkedIn/company enrichment, tech-stack detection, email verification, lead/company search, and French SIRET/SIREN data. Delivered via a Google Sheets add-on, a REST API, and an MCP server for AI agents.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/derrick/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/derrick/refs/heads/main/apis.yml)
+**Areas:** Data Enrichment · Email Finder · Phone Finder · company-firmographics · Lead Generation · Sales Intelligence · CRM Enrichment · tech-stack-detection · Email Verification · siret-siren-france · MCP Server · llms-txt
 
-## Tags
+## Derrick on APIs.io
 
-- b2b-data-enrichment
-- email-finder
-- phone-finder
-- company-firmographics
-- lead-generation
-- sales-intelligence
-- crm-enrichment
-- tech-stack-detection
-- email-verification
-- siret-siren-france
-- mcp-server
-- llms-txt
-- google-sheets
-- gtm-tools
+Everything profiled for Derrick is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/derrick/](https://apis.io/providers/derrick/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (2)
 
-- **Created:** 2026-09-09
-- **Modified:** 2026-09-09
+- [Derrick REST API](https://apis.io/apis/derrick/derrick-rest-api/) — REST API for B2B data enrichment (emails, phones, profile/company enrichment, verification, search, SIRET/SIREN). Bearer API-key auth; requires Standard…
+- [Derrick MCP Server](https://apis.io/apis/derrick/derrick-mcp-server/) — Hosted streamable-HTTP MCP server exposing 12 enrichment tools; also available as a local npm package (derrick-mcp). Bearer API-key auth; requires Standard…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [mcp](https://apis.io/servers/derrick/mcp/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Derrick Authentication](https://apis.io/security/derrick/derrick-authentication/)
+- [Derrick Domain Security](https://apis.io/security/derrick/derrick-domain-security/)
+- [Derrick Vulnerability Disclosure](https://apis.io/security/derrick/derrick-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Derrick Plans Pricing](https://apis.io/plans/derrick/derrick-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Derrick Rate Limits](https://apis.io/rate-limits/derrick/derrick-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://derrick-app.com)
+- [Pricing](https://derrick-app.com/#pricing)
+- [Sign up](https://derrick-app.com/get-started)
+- [Blog](https://derrick-app.com/blog)
+- [Privacy policy](https://derrick-app.com/privacy)
+- [GitHub](https://github.com/DerrickAppOrg)
+
+## API Evangelist rating
+
+**Kin Score 35.8** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 55.3 |
+| Developer ergonomics | 25.6 |
+| Access clarity | 60.5 |
+
+**Agent readiness 34.4** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+
+**Regulatory alignment 26.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/derrick/](https://apis.io/providers/derrick/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Derrick: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/derrick/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
